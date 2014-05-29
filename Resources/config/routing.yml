@@ -1,0 +1,17 @@
+todo_list_homepage:
+    pattern:  /TODOList
+    defaults: { _controller: TODOListBundle:Default:index }
+
+todo_list_tasklists:
+    pattern:  /TODOList/lists
+    defaults: { _controller: TODOListBundle:TaskLists:getTaskLists }
+
+todo_list_new_tasklist:
+    pattern:  /TODOList/lists/new
+    defaults: { _controller: TODOListBundle:TaskLists:newTaskList }
+
+todo_list_tasks:
+    pattern:  /TODOList/lists/{idList}
+    defaults: { _controller: TODOListBundle:Tasks:getTasks }
+    requirements:
+        idList: \d+

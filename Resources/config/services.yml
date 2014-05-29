@@ -1,0 +1,7 @@
+parameters:
+#    todo_list.example.class: Acme\TODOListBundle\Example
+
+services:
+#    todo_list.example:
+#        class: %todo_list.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
