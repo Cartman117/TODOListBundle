@@ -1,0 +1,4 @@
+Acme\TODOListBundle\Entity\TaskLists:
+  properties:
+    name:
+      - NotBlank: ~

@@ -5,9 +5,9 @@ namespace Acme\TODOListBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Tasklists
+ * TaskLists
  */
-class Tasklists
+class TaskLists
 {
     /**
      * @var string
@@ -24,7 +24,7 @@ class Tasklists
      * Set name
      *
      * @param string $name
-     * @return Tasklists
+     * @return TaskLists
      */
     public function setName($name)
     {

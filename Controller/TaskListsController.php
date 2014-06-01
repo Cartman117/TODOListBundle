@@ -7,9 +7,11 @@
  */
 
 namespace Acme\TODOListBundle\Controller;
-use Acme\TODOListBundle\Entity\Tasklists;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\BrowserKit\Request;
+use Acme\TODOListBundle\Entity\TaskLists;
+use Acme\TODOListBundle\Form\Type\TaskListsType;
+use Symfony\Component\HttpFoundation\Request;
 
 
 class TaskListsController extends Controller{
@@ -22,18 +24,19 @@ class TaskListsController extends Controller{
     }
 
     public function newTaskListAction(Request $request) {
+        $taskList = new TaskLists();
 
-        $taskList = new Tasklists();
+        $form = $this->createForm(new TaskListsType(), $taskList);
 
-        $form = $this->createFormBuilder()
-            ->add('name')
-            ->add('Créer', 'submit')
-            ->getForm();
+        $form->handleRequest($request);
+        if($form->isValid()){
+            $manager = $this->getDoctrine()->getManager();
+            $manager->persist($taskList);
+            $manager->flush();
 
-        if($form->handleRequest($request)->isValid()){
-            $this->getDoctrine()->getManager()->persist($taskList);
+            return $this->redirect($this->generateUrl("todo_list_tasklists"));
         }
 
         return $this->render('TODOListBundle:TaskLists:newTaskListForm.html.twig', ["form" => $form->createView()]);
     }
-} 
+}
