@@ -53,7 +53,24 @@ class TaskListsController extends Controller{
         return $this->redirect($this->generateUrl("todo_list_tasklists"));
     }
 
-    public function updateTaskList(){
-        
+    public function updateTaskListAction($idTaskList, Request $request){
+        $repository = $this->getDoctrine()->getRepository('TODOListBundle:TaskLists');
+        $taskList = $repository->findOneByIdList($idTaskList);
+
+        if(empty($taskList)){
+            throw $this->createNotFoundException("La liste de taches n'existe pas");
+        }
+
+        $form = $this->createForm(new TaskListsType(), $taskList);
+
+        $form->handleRequest($request);
+        if($form->isValid()){
+            $manager = $this->getDoctrine()->getManager();
+            $manager->flush();
+
+            return $this->redirect($this->generateUrl("todo_list_tasklists"));
+        }
+
+        return $this->render('TODOListBundle:TaskLists:newTaskListForm.html.twig', ["form" => $form->createView()]);
     }
 }

@@ -16,6 +16,12 @@ todo_list_delete_tasklist:
     requirements:
       idTaskList: \d+
 
+todo_list_update_tasklist:
+    pattern: /TODOList/lists/update/{idTaskList}
+    defaults: { _controller: TODOListBundle:TaskLists:updateTaskList }
+    requirements:
+      idTaskList: \d+
+
 todo_list_tasks:
     pattern:  /TODOList/lists/{idTaskList}
     defaults: { _controller: TODOListBundle:Tasks:getTasks }
