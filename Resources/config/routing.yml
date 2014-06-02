@@ -10,8 +10,14 @@ todo_list_new_tasklist:
     pattern:  /TODOList/lists/new
     defaults: { _controller: TODOListBundle:TaskLists:newTaskList }
 
+todo_list_delete_tasklist:
+    pattern: /TODOList/lists/delete/{idTaskList}
+    defaults: { _controller: TODOListBundle:TaskLists:deleteTaskList }
+    requirements:
+      idTaskList: \d+
+
 todo_list_tasks:
-    pattern:  /TODOList/lists/{idList}
+    pattern:  /TODOList/lists/{idTaskList}
     defaults: { _controller: TODOListBundle:Tasks:getTasks }
     requirements:
-        idList: \d+
+        idTaskList: \d+

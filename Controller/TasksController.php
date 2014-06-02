@@ -12,10 +12,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class TasksController extends Controller{
 
-    public function getTasksAction($idList)
+    public function getTasksAction($idTaskList)
     {
         $repository = $this->getDoctrine()->getRepository('TODOListBundle:Tasks');
-        $tasks = $repository->findByIdList($idList);
+        $tasks = $repository->findByIdList($idTaskList);
 
         return $this->render('TODOListBundle:Tasks:index.html.twig', array('tasks' => $tasks));
     }

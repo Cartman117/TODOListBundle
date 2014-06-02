@@ -39,4 +39,21 @@ class TaskListsController extends Controller{
 
         return $this->render('TODOListBundle:TaskLists:newTaskListForm.html.twig', ["form" => $form->createView()]);
     }
+
+    public function deleteTaskListAction($idTaskList){
+        $repository = $this->getDoctrine()->getRepository('TODOListBundle:TaskLists');
+        $taskList = $repository->findOneByIdList($idTaskList);
+
+        if(!empty($taskList)){
+            $manager = $this->getDoctrine()->getManager();
+            $manager->remove($taskList);
+            $manager->flush();
+        }
+
+        return $this->redirect($this->generateUrl("todo_list_tasklists"));
+    }
+
+    public function updateTaskList(){
+        
+    }
 }
