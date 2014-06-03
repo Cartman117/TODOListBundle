@@ -1,14 +1,14 @@
 <h1>TaskLists</h1>
-<a href="{{ path("todo_list_tasklists") }}">New tasklist</a>
+<a href="{{ path("todolist_new_tasklists") }}">New tasklist</a>
 <ul>
     {% for taskList in taskLists %}
         <li>
-            <form name="form" action="{{ path("todo_delete_tasklist") }}" method="post">
+            <form name="form" action="{{ path("todolist_delete_tasklists") }}" method="post">
                 <input type="hidden" name="idList" value="{{ taskList.idList }}"/>
                 <input type="submit" value="Delete" name="delete"/>
             </form>
-            <a href="{{ path("todo_update_tasklist", { "idTaskList" : taskList.idList}) }}">Update</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-            <a href="{{ path("todo_list_tasks", { "idTaskList" : taskList.idList}) }}">Tasks</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+            <a href="{{ path("todolist_update_tasklists", { "idTaskList" : taskList.idList}) }}">Update</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+            <a href="{{ path("todolist_list_tasks", { "idTaskList" : taskList.idList}) }}">Tasks</a>&nbsp;&nbsp;|&nbsp;&nbsp;
             {{ taskList.name }}
         </li>
     {% endfor %}

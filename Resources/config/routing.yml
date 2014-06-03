@@ -1,44 +1,44 @@
-todo_list_homepage:
+todolist_list_homepage:
     pattern:  /TODOList
     defaults: { _controller: TODOListBundle:Default:index }
 
-todo_list_tasklists:
+todolist_list_tasklists:
     pattern:  /TODOList/lists
     defaults: { _controller: TODOListBundle:TaskLists:getTaskLists }
 
-todo_new_tasklist:
+todolist_new_tasklists:
     pattern:  /TODOList/lists/new
     defaults: { _controller: TODOListBundle:TaskLists:newTaskList }
 
-todo_delete_tasklist:
+todolist_delete_tasklists:
     pattern: /TODOList/lists/delete
     defaults: { _controller: TODOListBundle:TaskLists:deleteTaskList }
 
-todo_update_tasklist:
+todolist_update_tasklists:
     pattern: /TODOList/lists/update/{idTaskList}
     defaults: { _controller: TODOListBundle:TaskLists:updateTaskList }
     requirements:
       idTaskList: \d+
 
-todo_list_tasks:
+todolist_list_tasks:
     pattern:  /TODOList/lists/{idTaskList}/tasks
     defaults: { _controller: TODOListBundle:Tasks:getTasks }
     requirements:
         idTaskList: \d+
 
-todo_new_tasks:
+todolist_new_tasks:
     pattern:  /TODOList/lists/{idTaskList}/tasks/new
     defaults: { _controller: TODOListBundle:Tasks:newTask }
     requirements:
         idTaskList: \d+
 
-todo_delete_tasks:
+todolist_delete_tasks:
     pattern: /TODOList/lists/{idTaskList}/tasks/delete
     defaults: { _controller: TODOListBundle:TaskLists:deleteTask }
     requirements:
       idTaskList: \d+
 
-todo_update_tasks:
+todolist_update_tasks:
     pattern: /TODOList/lists/{idTaskList}/tasks/update/{idTask}
     defaults: { _controller: TODOListBundle:TaskLists:updateTask }
     requirements:

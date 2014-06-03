@@ -1,6 +1,14 @@
 <h1>Tasks</h1>
+<a href="{{ path("todolist_new_tasks", { "idTaskList" : app.request.get("idTaskList")}) }}">New task</a>
 <ul>
-{% for task in tasks %}
-    <li>{{ task.name }}</li>
-{% endfor %}
+    {% for task in tasks %}
+        <li>
+            <form name="form" action="{{ path("todolist_delete_tasks", { "idTaskList" : app.request.get("idTaskList")}) }}" method="post">
+                <input type="hidden" name="idTask" value="{{ task.idTask }}"/>
+                <input type="submit" value="Delete" name="delete"/>
+            </form>
+            <a href="{{ path("todolist_update_tasks", { "idTask" : task.idTask, "idTaskList" : app.request.get("idTaskList")}) }}">Update</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+            {{ task.name }}
+        </li>
+    {% endfor %}
 </ul>

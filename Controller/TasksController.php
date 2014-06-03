@@ -36,7 +36,7 @@ class TasksController extends Controller{
             $manager->persist($taskList);
             $manager->flush();
 
-            return $this->redirect($this->generateUrl("todo_list_tasks"));
+            return $this->redirect($this->generateUrl("todolist_list_tasks"));
         }
 
         return $this->render('TODOListBundle:Tasks:newTaskForm.html.twig', ["form" => $form->createView()]);
@@ -54,7 +54,7 @@ class TasksController extends Controller{
         $manager->remove($taskList);
         $manager->flush();
 
-        return $this->redirect($this->generateUrl("todo_list_tasks"));
+        return $this->redirect($this->generateUrl("todolist_list_tasks"));
     }
 
     public function updateTaskAction($idTask, Request $request){
@@ -72,7 +72,7 @@ class TasksController extends Controller{
             $manager = $this->getDoctrine()->getManager();
             $manager->flush();
 
-            return $this->redirect($this->generateUrl("todo_list_tasks"));
+            return $this->redirect($this->generateUrl("todolist_list_tasks"));
         }
 
         return $this->render('TODOListBundle:Tasks:newTaskForm.html.twig', ["form" => $form->createView()]);
