@@ -37,18 +37,22 @@ class TaskListsController extends Controller{
             return $this->redirect($this->generateUrl("todo_list_tasklists"));
         }
 
-        return $this->render('TODOListBundle:TaskLists:newTaskListForm.html.twig', ["form" => $form->createView()]);
+        return $this->render('TODOListBundle:TaskLists:newTaskListForm.html.twig', ['form' => $form->createView()]);
     }
 
-    public function deleteTaskListAction($idTaskList){
+    public function deleteTaskListAction(Request $request){
+        $idTaskList = $request->request->get('idList');
+
         $repository = $this->getDoctrine()->getRepository('TODOListBundle:TaskLists');
         $taskList = $repository->findOneByIdList($idTaskList);
 
-        if(!empty($taskList)){
-            $manager = $this->getDoctrine()->getManager();
-            $manager->remove($taskList);
-            $manager->flush();
+        if(empty($taskList)){
+            throw $this->createNotFoundException("La liste de taches n'existe pas");
         }
+
+        $manager = $this->getDoctrine()->getManager();
+        $manager->remove($taskList);
+        $manager->flush();
 
         return $this->redirect($this->generateUrl("todo_list_tasklists"));
     }
@@ -71,6 +75,6 @@ class TaskListsController extends Controller{
             return $this->redirect($this->generateUrl("todo_list_tasklists"));
         }
 
-        return $this->render('TODOListBundle:TaskLists:newTaskListForm.html.twig', ["form" => $form->createView()]);
+        return $this->render('TODOListBundle:TaskLists:newTaskListForm.html.twig', ['form' => $form->createView()]);
     }
 }
