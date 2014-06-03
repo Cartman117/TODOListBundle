@@ -120,7 +120,7 @@ class Tasks
      * @param \Acme\TODOListBundle\Entity\Tasklists $idList
      * @return Tasks
      */
-    public function setIdList(\Acme\TODOListBundle\Entity\Tasklists $idList = null)
+    public function setIdList(\Acme\TODOListBundle\Entity\TaskLists $idList = null)
     {
         $this->idList = $idList;
 

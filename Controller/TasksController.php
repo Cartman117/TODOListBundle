@@ -25,41 +25,43 @@ class TasksController extends Controller{
     }
 
 
-    public function newTaskAction(Request $request) {
-        $taskList = new Tasks();
+    public function newTaskAction(Request $request, $idTaskList) {
+        $task = new Tasks();
 
-        $form = $this->createForm(new TasksType(), $taskList);
+        $form = $this->createForm(new TasksType(), $task);
 
         $form->handleRequest($request);
         if($form->isValid()){
             $manager = $this->getDoctrine()->getManager();
-            $manager->persist($taskList);
+            $manager->persist($task);
             $manager->flush();
 
-            return $this->redirect($this->generateUrl("todolist_list_tasks"));
+            return $this->redirect($this->generateUrl("todolist_list_tasks", ['idTaskList' => $idTaskList]));
         }
 
         return $this->render('TODOListBundle:Tasks:newTaskForm.html.twig', ["form" => $form->createView()]);
     }
 
-    public function deleteTaskAction($idTask){
-        $repository = $this->getDoctrine()->getRepository('TODOListBundle:Tasks');
-        $taskList = $repository->findOneByIdList($idTask);
+    public function deleteTaskAction(Request $request, $idTaskList){
+        $idTask = $request->request->get('idTask');
 
-        if(empty($taskList)){
+        $repository = $this->getDoctrine()->getRepository('TODOListBundle:Tasks');
+        $task = $repository->findOneByIdTask($idTask);
+
+        if(empty($task)){
             throw $this->createNotFoundException("La tache n'existe pas");
         }
 
         $manager = $this->getDoctrine()->getManager();
-        $manager->remove($taskList);
+        $manager->remove($task);
         $manager->flush();
 
-        return $this->redirect($this->generateUrl("todolist_list_tasks"));
+        return $this->redirect($this->generateUrl("todolist_list_tasks", ['idTaskList' => $idTaskList]));
     }
 
-    public function updateTaskAction($idTask, Request $request){
+    public function updateTaskAction($idTask, $idTaskList, Request $request){
         $repository = $this->getDoctrine()->getRepository('TODOListBundle:Tasks');
-        $task = $repository->findOneByIdList($idTask);
+        $task = $repository->findOneByIdTask($idTask);
 
         if(empty($task)){
             throw $this->createNotFoundException("La tache n'existe pas");
@@ -72,7 +74,7 @@ class TasksController extends Controller{
             $manager = $this->getDoctrine()->getManager();
             $manager->flush();
 
-            return $this->redirect($this->generateUrl("todolist_list_tasks"));
+            return $this->redirect($this->generateUrl("todolist_list_tasks", ['idTaskList' => $idTaskList]));
         }
 
         return $this->render('TODOListBundle:Tasks:newTaskForm.html.twig', ["form" => $form->createView()]);

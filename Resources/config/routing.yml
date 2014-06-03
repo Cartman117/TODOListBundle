@@ -34,13 +34,13 @@ todolist_new_tasks:
 
 todolist_delete_tasks:
     pattern: /TODOList/lists/{idTaskList}/tasks/delete
-    defaults: { _controller: TODOListBundle:TaskLists:deleteTask }
+    defaults: { _controller: TODOListBundle:Tasks:deleteTask }
     requirements:
       idTaskList: \d+
 
 todolist_update_tasks:
     pattern: /TODOList/lists/{idTaskList}/tasks/update/{idTask}
-    defaults: { _controller: TODOListBundle:TaskLists:updateTask }
+    defaults: { _controller: TODOListBundle:Tasks:updateTask }
     requirements:
       idTaskList: \d+
       idTask: \d+
