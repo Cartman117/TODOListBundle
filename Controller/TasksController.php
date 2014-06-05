@@ -14,7 +14,8 @@ use Acme\TODOListBundle\Form\Type\TasksType;
 use Symfony\Component\HttpFoundation\Request;
 
 
-class TasksController extends Controller{
+class TasksController extends Controller
+{
 
     public function getTasksAction($idTaskList)
     {
@@ -24,8 +25,8 @@ class TasksController extends Controller{
         return $this->render('TODOListBundle:Tasks:index.html.twig', array('tasks' => $tasks));
     }
 
-
-    public function newTaskAction(Request $request, $idTaskList) {
+    public function newTaskAction(Request $request, $idTaskList)
+    {
         $task = new Tasks();
 
         $form = $this->createForm(new TasksType(), $task);
@@ -42,7 +43,8 @@ class TasksController extends Controller{
         return $this->render('TODOListBundle:Tasks:newTaskForm.html.twig', ["form" => $form->createView()]);
     }
 
-    public function deleteTaskAction(Request $request, $idTaskList){
+    public function deleteTaskAction(Request $request, $idTaskList)
+    {
         $idTask = $request->request->get('idTask');
 
         $repository = $this->getDoctrine()->getRepository('TODOListBundle:Tasks');
@@ -59,7 +61,8 @@ class TasksController extends Controller{
         return $this->redirect($this->generateUrl("todolist_list_tasks", ['idTaskList' => $idTaskList]));
     }
 
-    public function updateTaskAction($idTask, $idTaskList, Request $request){
+    public function updateTaskAction($idTask, $idTaskList, Request $request)
+    {
         $repository = $this->getDoctrine()->getRepository('TODOListBundle:Tasks');
         $task = $repository->findOneByIdTask($idTask);
 
