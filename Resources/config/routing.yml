@@ -44,3 +44,11 @@ todolist_update_tasks:
     requirements:
       idTaskList: \d+
       idTask: \d+
+
+todolist_oauth_callback:
+    pattern: /TODOList/oauth/callback?code={code}
+    defaults: { _controller: TODOListBundle:OAuth:callback }
+
+todolist_oauth_exit:
+    pattern: /TODOList/oauth/exit
+    defaults: { _controller: TODOListBundle:OAuth:exit }
