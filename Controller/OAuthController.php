@@ -23,9 +23,7 @@ class OAuthController extends Controller
 
         $googleClient = $client->getGoogleClient();
         $googleClient->setScopes(array(
-            'https://www.googleapis.com/auth/plus.me',
-            'https://www.googleapis.com/auth/userinfo.email',
-            'https://www.googleapis.com/auth/userinfo.profile',
+            'https://www.googleapis.com/auth/tasks'
         ));
 
         if(!empty($code)){
@@ -56,7 +54,7 @@ class OAuthController extends Controller
         }
         $service = new  \Google_Service_Tasks($googleClient);
 
-        return $this->render('TODOListBundle:Default:index.html.twig');
+        return $this->redirect($this->generateUrl("todolist_googleapi_list_taskslist"));
     }
 
     public function exitAction()
