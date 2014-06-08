@@ -8,14 +8,17 @@
 
 namespace Acme\TODOListBundle\Controller;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use HappyR\Google\ApiBundle\Services;
+use Symfony\Component\Security\Core\Authentication\Token\PreAuthenticatedToken;
+use HappyR\Google\ApiBundle\Services\GoogleClient;
 use HappyR\Google\ApiBundle\DependencyInjection;
 
-class OAuthController
+class OAuthController extends Controller
 {
-    public function callbackAction($code)
+    public function callbackAction(Request $request)
     {
+        $code = $request->query->get("code");
         $client = $this->container->get("happyr.google.api.client");
 
         $googleClient = $client->getGoogleClient();
@@ -27,12 +30,23 @@ class OAuthController
 
         if(!empty($code)){
             $googleClient->authenticate($code);
-            $_SESSION['token'] = $client->getAccessToken();
-        }
+            $accessToken = $googleClient->getAccessToken();
 
+            $this->securityContext = $this->get("security.context");
+
+            $token = $this->securityContext->getToken(); // get previous token
+            $token = new PreAuthenticatedToken(
+                $accessToken,
+                $token->getCredentials(),
+                $token->getProviderKey(),
+                [ 'ROLE_HAS_TOKEN' ]
+            );
+            $_SESSION['token'] = $token;
+            $this->securityContext->setToken($token);
+        }
         if(isset($_SESSION['token'])) {
             $token = $_SESSION['token'];
-            $googleClient->setAccessToken($token);
+            $googleClient->setAccessToken($token->getUser());
         }
 
         if(!$googleClient->getAccessToken()) {
@@ -40,8 +54,7 @@ class OAuthController
             header("Location: ".$authUrl);
             die;
         }
-
-        $service = new \Google_Service_Tasks($googleClient);
+        $service = new  \Google_Service_Tasks($googleClient);
 
         return $this->render('TODOListBundle:Default:index.html.twig');
     }
