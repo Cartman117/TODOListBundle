@@ -52,3 +52,21 @@ todolist_oauth_callback:
 todolist_oauth_exit:
     pattern: /TODOList/oauth/exit
     defaults: { _controller: TODOListBundle:OAuth:exit }
+
+todolist_googleapi_list_taskslist:
+    pattern: /TODOList/googleapi/lists
+    defaults: { _controller: TODOListBundle:GoogleApiTasksLists:getTaskLists }
+
+todolist_googleapi_new_tasklists:
+    pattern:  /TODOList/googleapi/lists/new
+    defaults: { _controller: TODOListBundle:GoogleApiTasksLists:newTaskList }
+
+todolist_googleapi_delete_tasklists:
+    pattern: /TODOList/googleapi/lists/delete
+    defaults: { _controller: TODOListBundle:GoogleApiTasksLists:deleteTaskList }
+
+todolist_googleapi_update_tasklists:
+    pattern: /TODOList/googleapi/lists/update/{idTaskList}
+    defaults: { _controller: TODOListBundle:GoogleApiTasksLists:updateTaskList }
+    requirements:
+      idTaskList: \d+

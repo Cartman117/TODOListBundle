@@ -14,7 +14,7 @@ use Acme\TODOListBundle\Form\Type\TaskListsType;
 use Symfony\Component\HttpFoundation\Request;
 
 
-class TaskListsController extends Controller
+class TaskListsController extends Controller implements TasksListsInterface
 {
     public function getTaskListsAction()
     {
