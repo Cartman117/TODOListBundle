@@ -52,4 +52,18 @@ class TaskListsGoogleApiController extends Controller implements TaskListsInterf
 
         return $this->render('TODOListBundle:TaskLists:newTaskListForm.html.twig', ['form' => $form->createView()]);
     }
+
+    public function deleteTaskListAction(Request $request)
+    {
+        $client = $this->container->get("happyr.google.api.client");
+        $googleClient = $client->getGoogleClient();
+        $token = $_SESSION['token'];
+        $googleClient->setAccessToken($token->getUser());
+        $service = new \Google_Service_Tasks($googleClient);
+
+        $idTaskList = $request->request->get('idTaskList');
+        $service->tasklists->delete($idTaskList);
+
+        return $this->redirect($this->generateUrl("todolist_googleapi_list_taskslist"));
+    }
 }
