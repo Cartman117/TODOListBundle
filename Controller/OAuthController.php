@@ -12,7 +12,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\Authentication\Token\PreAuthenticatedToken;
 use HappyR\Google\ApiBundle\Services\GoogleClient;
-use HappyR\Google\ApiBundle\DependencyInjection;
 
 class OAuthController extends Controller
 {

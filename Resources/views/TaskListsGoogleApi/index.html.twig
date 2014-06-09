@@ -1,0 +1,15 @@
+<h1>TaskLists</h1>
+<a href="{{ path("todolist_googleapi_new_tasklists") }}">New tasklist</a>
+<ul>
+    {% for taskList in taskLists %}
+        <li>
+            <form name="form" action="{{ path("todolist_googleapi_delete_tasklists") }}" method="post">
+                <input type="hidden" name="idTaskList" value="{{ taskList.id }}"/>
+                <input type="submit" value="Delete" name="delete"/>
+            </form>
+            <a href="{{ path("todolist_googleapi_update_tasklists", { "idTaskList" : taskList.id}) }}">Update</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+            <a href="{{ path("todolist_googleapi_list_tasks", { "idTaskList" : taskList.id}) }}">Tasks</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+            {{ taskList.title }}
+        </li>
+    {% endfor %}
+</ul>

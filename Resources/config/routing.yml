@@ -55,18 +55,32 @@ todolist_oauth_exit:
 
 todolist_googleapi_list_taskslist:
     pattern: /TODOList/googleapi/lists
-    defaults: { _controller: TODOListBundle:GoogleApiTasksLists:getTaskLists }
+    defaults: { _controller: TODOListBundle:TaskListsGoogleApi:getTaskLists }
 
 todolist_googleapi_new_tasklists:
     pattern:  /TODOList/googleapi/lists/new
-    defaults: { _controller: TODOListBundle:GoogleApiTasksLists:newTaskList }
+    defaults: { _controller: TODOListBundle:TaskListsGoogleApi:newTaskList }
 
 todolist_googleapi_delete_tasklists:
     pattern: /TODOList/googleapi/lists/delete
-    defaults: { _controller: TODOListBundle:GoogleApiTasksLists:deleteTaskList }
+    defaults: { _controller: TODOListBundle:TaskListsGoogleApi:deleteTaskList }
 
 todolist_googleapi_update_tasklists:
     pattern: /TODOList/googleapi/lists/update/{idTaskList}
-    defaults: { _controller: TODOListBundle:GoogleApiTasksLists:updateTaskList }
-    requirements:
-      idTaskList: \d+
+    defaults: { _controller: TODOListBundle:TaskListsGoogleApi:updateTaskList }
+
+todolist_googleapi_list_tasks:
+    pattern:  /TODOList/googleapi/lists/{idTaskList}/tasks
+    defaults: { _controller: TODOListBundle:TasksGoogleApi:getTasks }
+
+todolist_googleapi_new_tasks:
+    pattern:  /TODOList/googleapi/lists/{idTaskList}/tasks/new
+    defaults: { _controller: TODOListBundle:TasksGoogleApi:newTask }
+
+todolist_googleapi_delete_tasks:
+    pattern: /TODOList/googleapi/lists/{idTaskList}/tasks/delete
+    defaults: { _controller: TODOListBundle:TasksGoogleApi:deleteTask }
+
+todolist_googleapi_update_tasks:
+    pattern: /TODOList/googleapi/lists/{idTaskList}/tasks/update/{idTask}
+    defaults: { _controller: TODOListBundle:TasksGoogleApi:updateTask }

@@ -11,10 +11,11 @@ namespace Acme\TODOListBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Acme\TODOListBundle\Entity\TaskLists;
 use Acme\TODOListBundle\Form\Type\TaskListsType;
+use Acme\TODOListBundle\Controller\TaskListsInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 
-class TaskListsController extends Controller implements TasksListsInterface
+class TaskListsController extends Controller implements TaskListsInterface
 {
     public function getTaskListsAction()
     {

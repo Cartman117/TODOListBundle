@@ -9,7 +9,7 @@ namespace Acme\TODOListBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 
-interface TasksListsInterface{
+interface TaskListsInterface{
 
     public function getTaskListsAction();
 
