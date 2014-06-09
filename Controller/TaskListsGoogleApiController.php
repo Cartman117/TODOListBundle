@@ -39,7 +39,7 @@ class TaskListsGoogleApiController extends Controller implements TaskListsInterf
 
         $form = $this->createFormBuilder()
             ->add("title")
-            ->add("Créer", "submit")
+            ->add("Create", "submit")
             ->getForm();
 
         $form->handleRequest($request);
@@ -65,5 +65,30 @@ class TaskListsGoogleApiController extends Controller implements TaskListsInterf
         $service->tasklists->delete($idTaskList);
 
         return $this->redirect($this->generateUrl("todolist_googleapi_list_taskslist"));
+    }
+
+    public function updateTaskListAction(Request $request, $idTaskList)
+    {
+        $client = $this->container->get("happyr.google.api.client");
+        $googleClient = $client->getGoogleClient();
+        $token = $_SESSION['token'];
+        $googleClient->setAccessToken($token->getUser());
+        $service = new \Google_Service_Tasks($googleClient);
+
+        $taskList = $service->tasklists->get($idTaskList);
+        $form = $this->createFormBuilder()
+            ->add("title", "text", ['data' => $taskList->getTitle()])
+            ->add("Update", "submit")
+            ->getForm();
+
+        $form->handleRequest($request);
+        if($form->isValid()){
+            $taskList->setTitle($form->getData()['title']);
+            $service->tasklists->update($taskList->getId(), $taskList);
+
+            return $this->redirect($this->generateUrl("todolist_googleapi_list_taskslist"));
+        }
+
+        return $this->render('TODOListBundle:TaskLists:newTaskListForm.html.twig', ['form' => $form->createView()]);
     }
 }

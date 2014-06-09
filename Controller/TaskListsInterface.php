@@ -16,4 +16,6 @@ interface TaskListsInterface{
     public function newTaskListAction(Request $request);
 
     public function deleteTaskListAction(Request $request);
+
+    public function updateTaskListAction(Request $request, $idTaskList);
 }

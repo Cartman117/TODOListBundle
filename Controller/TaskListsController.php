@@ -61,7 +61,7 @@ class TaskListsController extends Controller implements TaskListsInterface
         return $this->redirect($this->generateUrl("todolist_list_tasklists"));
     }
 
-    public function updateTaskListAction($idTaskList, Request $request)
+    public function updateTaskListAction(Request $request, $idTaskList)
     {
         $repository = $this->getDoctrine()->getRepository('TODOListBundle:TaskLists');
         $taskList = $repository->findOneByIdList($idTaskList);
