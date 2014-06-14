@@ -17,6 +17,11 @@ use Symfony\Component\HttpFoundation\Request;
 
 class TaskListsController extends Controller implements TaskListsInterface
 {
+    public function indexAction()
+    {
+        return $this->redirect($this->generateUrl("todolist_list_tasklists"));
+    }
+
     public function getTaskListsAction()
     {
         $repository = $this->getDoctrine()->getRepository('TODOListBundle:TaskLists');
@@ -45,10 +50,10 @@ class TaskListsController extends Controller implements TaskListsInterface
 
     public function deleteTaskListAction(Request $request)
     {
-        $idTaskList = $request->request->get('idList');
+        $idTaskList = $request->request->get('id');
 
         $repository = $this->getDoctrine()->getRepository('TODOListBundle:TaskLists');
-        $taskList = $repository->findOneByIdList($idTaskList);
+        $taskList = $repository->findOneById($idTaskList);
 
         if(empty($taskList)){
             throw $this->createNotFoundException("La liste de taches n'existe pas");
@@ -64,7 +69,7 @@ class TaskListsController extends Controller implements TaskListsInterface
     public function updateTaskListAction(Request $request, $idTaskList)
     {
         $repository = $this->getDoctrine()->getRepository('TODOListBundle:TaskLists');
-        $taskList = $repository->findOneByIdList($idTaskList);
+        $taskList = $repository->findOneById($idTaskList);
 
         if(empty($taskList)){
             throw $this->createNotFoundException("La liste de taches n'existe pas");

@@ -5,23 +5,18 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class TaskListsType extends AbstractType
+class TasksGoogleApiType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('title', 'text');
+        $builder->add('notes', 'textarea');
+        $builder->add('due', 'datetime');
         $builder->add('Créer', 'submit');
-    }
-
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $resolver->setDefaults(array(
-            'data_class' => 'Acme\TODOListBundle\Entity\TaskLists'
-        ));
     }
 
     public function getName()
     {
-        return 'taskListsType';
+        return 'taskListsGoogleApiType';
     }
 }

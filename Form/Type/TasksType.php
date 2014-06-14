@@ -8,7 +8,6 @@
 
 namespace Acme\TODOListBundle\Form\Type;
 
-use Proxies\__CG__\Acme\TODOListBundle\Entity\Tasklists;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -16,11 +15,11 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 class TasksType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name', 'text');
-        $builder->add('detail', 'textarea');
-        $builder->add('endDate', 'datetime');
-        $builder->add('idList', 'entity', array('class' => 'TODOListBundle:TaskLists',
-                                                'property' => 'idList'));
+        $builder->add('title', 'text');
+        $builder->add('notes', 'textarea');
+        $builder->add('due', 'datetime');
+        $builder->add('parent', 'entity', array('class' => 'TODOListBundle:TaskLists',
+                                                'property' => 'id'));
         $builder->add('Créer', 'submit');
     }
 

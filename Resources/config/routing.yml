@@ -1,6 +1,10 @@
+todolist_homepage:
+    pattern:  /a
+    defaults: { _controller: TODOListBundle:TaskLists:index }
+
 todolist_list_homepage:
     pattern:  /TODOList
-    defaults: { _controller: TODOListBundle:Default:index }
+    defaults: { _controller: TODOListBundle:TaskLists:index }
 
 todolist_list_tasklists:
     pattern:  /TODOList/lists
@@ -17,20 +21,14 @@ todolist_delete_tasklists:
 todolist_update_tasklists:
     pattern: /TODOList/lists/update/{idTaskList}
     defaults: { _controller: TODOListBundle:TaskLists:updateTaskList }
-    requirements:
-      idTaskList: \d+
 
 todolist_list_tasks:
     pattern:  /TODOList/lists/{idTaskList}/tasks
     defaults: { _controller: TODOListBundle:Tasks:getTasks }
-    requirements:
-        idTaskList: \d+
 
 todolist_new_tasks:
     pattern:  /TODOList/lists/{idTaskList}/tasks/new
     defaults: { _controller: TODOListBundle:Tasks:newTask }
-    requirements:
-        idTaskList: \d+
 
 todolist_delete_tasks:
     pattern: /TODOList/lists/{idTaskList}/tasks/delete

@@ -18,9 +18,9 @@ class AccessDeniedHandler implements AccessDeniedHandlerInterface
     public function __construct(GoogleClient $client)
     {
         $this->client = $client->getGoogleClient();
-        $this->client->setScopes(array(
+        $this->client->setScopes([
             'https://www.googleapis.com/auth/tasks'
-        ));
+        ]);
     }
 
     /**
@@ -40,13 +40,10 @@ class AccessDeniedHandler implements AccessDeniedHandlerInterface
         $response->setContent($message);
 
         //400 : session vidée
-        if ($exception instanceof HttpExceptionInterface) {
+        if ($exception instanceof \Google_Auth_Exception) {
             $response->setStatusCode($exception->getStatusCode());
             $response->headers->replace($exception->getHeaders());
-        } else {
-            $response->setStatusCode(500);
+            $event->setResponse($response);
         }
-
-        $event->setResponse($response);
     }
 }

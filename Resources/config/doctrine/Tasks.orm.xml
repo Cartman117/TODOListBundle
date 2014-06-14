@@ -2,17 +2,17 @@
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
   <entity name="Acme\TODOListBundle\Entity\Tasks" table="tasks">
     <indexes>
-      <index name="id_list" columns="id_list"/>
+      <index name="parent" columns="parent"/>
     </indexes>
-    <id name="idTask" type="integer" column="id_task">
+    <id name="id" type="integer" column="id">
       <generator strategy="IDENTITY"/>
     </id>
-    <field name="name" type="string" column="name" length="255" nullable="false"/>
-    <field name="detail" type="text" column="detail" nullable="true"/>
-    <field name="endDate" type="datetime" column="end_date" nullable="true"/>
-    <many-to-one field="idList" target-entity="Tasklists">
+    <field name="title" type="string" column="title" length="255" nullable="false"/>
+    <field name="notes" type="text" column="notes" nullable="true"/>
+    <field name="due" type="datetime" column="due" nullable="true"/>
+    <many-to-one field="parent" target-entity="TaskLists">
       <join-columns>
-        <join-column name="id_list" referenced-column-name="id_list"/>
+        <join-column name="parent" referenced-column-name="id"/>
       </join-columns>
     </many-to-one>
   </entity>

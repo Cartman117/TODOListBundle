@@ -14,13 +14,13 @@ use Acme\TODOListBundle\Form\Type\TasksType;
 use Symfony\Component\HttpFoundation\Request;
 
 
-class TasksController extends Controller
+class TasksController extends Controller implements TasksInterface
 {
 
     public function getTasksAction($idTaskList)
     {
         $repository = $this->getDoctrine()->getRepository('TODOListBundle:Tasks');
-        $tasks = $repository->findByIdList($idTaskList);
+        $tasks = $repository->findById($idTaskList);
 
         return $this->render('TODOListBundle:Tasks:index.html.twig', array('tasks' => $tasks));
     }
@@ -48,7 +48,7 @@ class TasksController extends Controller
         $idTask = $request->request->get('idTask');
 
         $repository = $this->getDoctrine()->getRepository('TODOListBundle:Tasks');
-        $task = $repository->findOneByIdTask($idTask);
+        $task = $repository->findOneById($idTask);
 
         if(empty($task)){
             throw $this->createNotFoundException("La tache n'existe pas");
@@ -61,10 +61,10 @@ class TasksController extends Controller
         return $this->redirect($this->generateUrl("todolist_list_tasks", ['idTaskList' => $idTaskList]));
     }
 
-    public function updateTaskAction($idTask, $idTaskList, Request $request)
+    public function updateTaskAction(Request $request, $idTaskList, $idTask)
     {
         $repository = $this->getDoctrine()->getRepository('TODOListBundle:Tasks');
-        $task = $repository->findOneByIdTask($idTask);
+        $task = $repository->findOneById($idTask);
 
         if(empty($task)){
             throw $this->createNotFoundException("La tache n'existe pas");

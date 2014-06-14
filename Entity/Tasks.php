@@ -12,128 +12,128 @@ class Tasks
     /**
      * @var string
      */
-    private $name;
+    private $title;
 
     /**
      * @var string
      */
-    private $detail;
+    private $notes;
 
     /**
      * @var \DateTime
      */
-    private $endDate;
+    private $due;
 
     /**
      * @var integer
      */
-    private $idTask;
+    private $id;
 
     /**
-     * @var \Acme\TODOListBundle\Entity\Tasklists
+     * @var \Acme\TODOListBundle\Entity\TaskLists
      */
-    private $idList;
+    private $parent;
 
 
     /**
-     * Set name
+     * Set title
      *
-     * @param string $name
+     * @param string $title
      * @return Tasks
      */
-    public function setName($name)
+    public function setTitle($title)
     {
-        $this->name = $name;
+        $this->title = $title;
 
         return $this;
     }
 
     /**
-     * Get name
+     * Get title
      *
      * @return string 
      */
-    public function getName()
+    public function getTitle()
     {
-        return $this->name;
+        return $this->title;
     }
 
     /**
-     * Set detail
+     * Set notes
      *
-     * @param string $detail
+     * @param string $notes
      * @return Tasks
      */
-    public function setDetail($detail)
+    public function setNotes($notes)
     {
-        $this->detail = $detail;
+        $this->notes = $notes;
 
         return $this;
     }
 
     /**
-     * Get detail
+     * Get notes
      *
      * @return string 
      */
-    public function getDetail()
+    public function getNotes()
     {
-        return $this->detail;
+        return $this->notes;
     }
 
     /**
-     * Set endDate
+     * Set due
      *
-     * @param \DateTime $endDate
+     * @param \DateTime $due
      * @return Tasks
      */
-    public function setEndDate($endDate)
+    public function setDue($due)
     {
-        $this->endDate = $endDate;
+        $this->due = $due;
 
         return $this;
     }
 
     /**
-     * Get endDate
+     * Get due
      *
      * @return \DateTime 
      */
-    public function getEndDate()
+    public function getDue()
     {
-        return $this->endDate;
+        return $this->due;
     }
 
     /**
-     * Get idTask
+     * Get id
      *
      * @return integer 
      */
-    public function getIdTask()
+    public function getId()
     {
-        return $this->idTask;
+        return $this->id;
     }
 
     /**
-     * Set idList
+     * Set parent
      *
-     * @param \Acme\TODOListBundle\Entity\Tasklists $idList
+     * @param \Acme\TODOListBundle\Entity\Tasklists $parent
      * @return Tasks
      */
-    public function setIdList(\Acme\TODOListBundle\Entity\TaskLists $idList = null)
+    public function setParent(\Acme\TODOListBundle\Entity\Tasklists $parent = null)
     {
-        $this->idList = $idList;
+        $this->parent = $parent;
 
         return $this;
     }
 
     /**
-     * Get idList
+     * Get parent
      *
      * @return \Acme\TODOListBundle\Entity\Tasklists 
      */
-    public function getIdList()
+    public function getParent()
     {
-        return $this->idList;
+        return $this->parent;
     }
 }

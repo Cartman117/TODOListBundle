@@ -21,9 +21,9 @@ class OAuthController extends Controller
         $client = $this->container->get("happyr.google.api.client");
 
         $googleClient = $client->getGoogleClient();
-        $googleClient->setScopes(array(
+        $googleClient->setScopes([
             'https://www.googleapis.com/auth/tasks'
-        ));
+        ]);
 
         if(!empty($code)){
             $googleClient->authenticate($code);
@@ -31,18 +31,17 @@ class OAuthController extends Controller
 
             $this->securityContext = $this->get("security.context");
 
-            $token = $this->securityContext->getToken(); // get previous token
+            $token = $this->securityContext->getToken();
             $token = new PreAuthenticatedToken(
                 $accessToken,
                 $token->getCredentials(),
                 $token->getProviderKey(),
                 [ 'ROLE_HAS_TOKEN' ]
             );
-            $_SESSION['token'] = $token;
             $this->securityContext->setToken($token);
         }
-        if(isset($_SESSION['token'])) {
-            $token = $_SESSION['token'];
+        if(!empty($this->securityContext)) {
+            $token = $this->securityContext->getToken();
             $googleClient->setAccessToken($token->getUser());
         }
 
@@ -51,14 +50,14 @@ class OAuthController extends Controller
             header("Location: ".$authUrl);
             die;
         }
-        $service = new  \Google_Service_Tasks($googleClient);
 
         return $this->redirect($this->generateUrl("todolist_googleapi_list_taskslist"));
     }
 
     public function exitAction()
     {
-        unset($_SESSION['token']);
+        $session = new Session();
+        $session->remove("token");
 
         return $this->render('TODOListBundle:Default:index.html.twig');
     }

@@ -1,14 +1,16 @@
 <h1>Tasks</h1>
 <a href="{{ path("todolist_new_tasks", { "idTaskList" : app.request.get("idTaskList")}) }}">New task</a>
-<ul>
-    {% for task in tasks %}
-        <li>
-            <form name="form" action="{{ path("todolist_delete_tasks", { "idTaskList" : app.request.get("idTaskList")}) }}" method="post">
-                <input type="hidden" name="idTask" value="{{ task.idTask }}"/>
-                <input type="submit" value="Delete" name="delete"/>
-            </form>
-            <a href="{{ path("todolist_update_tasks", { "idTask" : task.idTask, "idTaskList" : app.request.get("idTaskList")}) }}">Update</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-            {{ task.name }}
-        </li>
-    {% endfor %}
-</ul>
+{% if tasks is not empty %}
+    <ul>
+        {% for task in tasks %}
+            <li>
+                <form name="form" action="{{ path("todolist_delete_tasks", { "idTaskList" : app.request.get("idTaskList")}) }}" method="post">
+                    <input type="hidden" name="idTask" value="{{ task.id }}"/>
+                    <input type="submit" value="Delete" name="delete"/>
+                </form>
+                <a href="{{ path("todolist_update_tasks", { "idTask" : task.id, "idTaskList" : app.request.get("idTaskList")}) }}">Update</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+                {{ task.title }}
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}
