@@ -1,0 +1,22 @@
+{% extends 'TODOListBundle:Base:index.html.twig' %}
+
+{% block title %}
+    TaskLists {{ parent() }}
+{% endblock %}
+
+{% block header %}
+    <div class="container">
+        <h1>TaskLists</h1>
+    </div>
+{% endblock %}
+
+{% block menu %}
+    {{ parent() }}
+    <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+            <li>
+                <a href="{{ path("todolist_googleapi_new_tasklists") }}">Create a new TaskList</a>
+            </li>
+        </ul>
+    </div>
+{% endblock %}
