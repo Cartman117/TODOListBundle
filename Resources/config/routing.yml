@@ -51,7 +51,7 @@ todolist_oauth_exit:
     pattern: /TODOList/oauth/exit
     defaults: { _controller: TODOListBundle:OAuth:exit }
 
-todolist_googleapi_list_taskslist:
+todolist_googleapi_list_taskslists:
     pattern: /TODOList/googleapi/lists
     defaults: { _controller: TODOListBundle:TaskListsGoogleApi:getTaskLists }
 

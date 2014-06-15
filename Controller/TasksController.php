@@ -74,7 +74,7 @@ class TasksController extends Controller implements TasksInterface
             throw $this->createNotFoundException("La tache n'existe pas");
         }
 
-        $form = $this->createForm(new TasksType(), $task);
+        $form = $this->createForm(new TasksType(true), $task);
 
         $form->handleRequest($request);
         if($form->isValid()){
@@ -84,6 +84,6 @@ class TasksController extends Controller implements TasksInterface
             return $this->redirect($this->generateUrl("todolist_list_tasks", ['idTaskList' => $idTaskList]));
         }
 
-        return $this->render('TODOListBundle:Tasks:newTaskForm.html.twig', ["form" => $form->createView()]);
+        return $this->render('TODOListBundle:Tasks:updateTaskForm.html.twig', ["form" => $form->createView()]);
     }
 } 

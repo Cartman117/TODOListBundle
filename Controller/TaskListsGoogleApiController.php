@@ -10,7 +10,7 @@ namespace Acme\TODOListBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Acme\TODOListBundle\Controller\TaskListsInterface;
-use Symfony\Component\HttpFoundation\Session\Session;
+use Acme\TODOListBundle\Form\Type\TaskListsType;
 use Symfony\Component\HttpFoundation\Request;
 use HappyR\Google\ApiBundle\Services\GoogleClient;
 
@@ -42,27 +42,24 @@ class TaskListsGoogleApiController extends Controller implements TaskListsInterf
 
         $taskList = new \Google_Service_Tasks_TaskList();
 
-        $form = $this->createFormBuilder()
-            ->add("title")
-            ->add("Create", "submit")
-            ->getForm();
+        $form = $this->createForm(new TaskListsType());
 
         $form->handleRequest($request);
         if($form->isValid()){
-            $taskList->setTitle($form->getData()['title']);
+            $taskList->setTitle($form->getData()->getTitle());
             $serviceTask->tasklists->insert($taskList);
 
-            return $this->redirect($this->generateUrl("todolist_googleapi_list_taskslist"));
+            return $this->redirect($this->generateUrl("todolist_googleapi_list_taskslists"));
         }
 
-        return $this->render('TODOListBundle:TaskLists:newTaskListForm.html.twig', ['form' => $form->createView()]);
+        return $this->render('TODOListBundle:TaskListsGoogleApi:newTaskListForm.html.twig', ['form' => $form->createView()]);
     }
 
     public function deleteTaskListAction(Request $request)
     {
         $service = $this->getGoogleServiceTasks();
 
-        $idTaskList = $request->request->get('idTaskList');
+        $idTaskList = $request->request->get('id');
         $service->tasklists->delete($idTaskList);
 
         return $this->redirect($this->generateUrl("todolist_googleapi_list_taskslist"));
@@ -73,19 +70,17 @@ class TaskListsGoogleApiController extends Controller implements TaskListsInterf
         $service = $this->getGoogleServiceTasks();
 
         $taskList = $service->tasklists->get($idTaskList);
-        $form = $this->createFormBuilder()
-            ->add("title", "text", ['data' => $taskList->getTitle()])
-            ->add("Update", "submit")
-            ->getForm();
+
+        $form = $this->createForm(new TaskListsType(true));
 
         $form->handleRequest($request);
         if($form->isValid()){
-            $taskList->setTitle($form->getData()['title']);
+            $taskList->setTitle($form->getData()->getTitle());
             $service->tasklists->update($taskList->getId(), $taskList);
 
-            return $this->redirect($this->generateUrl("todolist_googleapi_list_taskslist"));
+            return $this->redirect($this->generateUrl("todolist_googleapi_list_taskslists"));
         }
 
-        return $this->render('TODOListBundle:TaskLists:newTaskListForm.html.twig', ['form' => $form->createView()]);
+        return $this->render('TODOListBundle:TaskListsGoogleApi:updateTaskListForm.html.twig', ['form' => $form->createView()]);
     }
 }
