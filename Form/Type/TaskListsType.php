@@ -8,9 +8,10 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 class TaskListsType extends AbstractType
 {
     private $update;
-    public function  __construct($update = false)
+    public function  __construct($update = false, $dataClass = "Acme\TODOListBundle\Entity\TaskLists")
     {
         $this->update = $update;
+        $this->dataClass = $dataClass;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -29,7 +30,7 @@ class TaskListsType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            "data_class" => "Acme\TODOListBundle\Entity\TaskLists"
+            "data_class" => $this->dataClass
         ));
     }
 

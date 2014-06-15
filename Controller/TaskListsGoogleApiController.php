@@ -71,11 +71,10 @@ class TaskListsGoogleApiController extends Controller implements TaskListsInterf
 
         $taskList = $service->tasklists->get($idTaskList);
 
-        $form = $this->createForm(new TaskListsType(true));
+        $form = $this->createForm(new TaskListsType(true, '\Google_Service_Tasks_TaskList'), $taskList);
 
         $form->handleRequest($request);
         if($form->isValid()){
-            $taskList->setTitle($form->getData()->getTitle());
             $service->tasklists->update($taskList->getId(), $taskList);
 
             return $this->redirect($this->generateUrl("todolist_googleapi_list_taskslists"));
