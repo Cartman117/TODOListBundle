@@ -7,21 +7,34 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class TaskListsType extends AbstractType
 {
+    private $update;
+    public function  __construct($update = false)
+    {
+        $this->update = $update;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('title', 'text');
-        $builder->add('Créer', 'submit');
+        $builder->add("title", "text", ["label" => false,
+                                        "attr" => ["placeholder" => "Title",
+                                                    "class" => "form-control"]]);
+        if($this->update){
+            $builder->add("Update", "submit", ["attr" => ["class" => "form-control"]]);
+        }
+        else{
+            $builder->add("Create", "submit", ["attr" => ["class" => "form-control"]]);
+        }
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Acme\TODOListBundle\Entity\TaskLists'
+            "data_class" => "Acme\TODOListBundle\Entity\TaskLists"
         ));
     }
 
     public function getName()
     {
-        return 'taskListsType';
+        return "taskListsType";
     }
 }

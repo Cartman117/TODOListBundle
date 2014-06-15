@@ -20,7 +20,7 @@ class TasksController extends Controller implements TasksInterface
     public function getTasksAction($idTaskList)
     {
         $repository = $this->getDoctrine()->getRepository('TODOListBundle:Tasks');
-        $tasks = $repository->findById($idTaskList);
+        $tasks = $repository->findByParent($idTaskList);
 
         return $this->render('TODOListBundle:Tasks:index.html.twig', array('tasks' => $tasks));
     }
@@ -33,6 +33,10 @@ class TasksController extends Controller implements TasksInterface
 
         $form->handleRequest($request);
         if($form->isValid()){
+
+            $repository = $this->getDoctrine()->getRepository('TODOListBundle:TaskLists');
+            $taskList = $repository->findOneById($idTaskList);
+            $task->setParent($taskList);
             $manager = $this->getDoctrine()->getManager();
             $manager->persist($task);
             $manager->flush();
@@ -45,7 +49,7 @@ class TasksController extends Controller implements TasksInterface
 
     public function deleteTaskAction(Request $request, $idTaskList)
     {
-        $idTask = $request->request->get('idTask');
+        $idTask = $request->request->get('id');
 
         $repository = $this->getDoctrine()->getRepository('TODOListBundle:Tasks');
         $task = $repository->findOneById($idTask);

@@ -1,5 +1,5 @@
 todolist_homepage:
-    pattern:  /a
+    pattern:  /
     defaults: { _controller: TODOListBundle:TaskLists:index }
 
 todolist_list_homepage:

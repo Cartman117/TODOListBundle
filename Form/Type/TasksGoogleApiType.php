@@ -11,7 +11,7 @@ class TasksGoogleApiType extends AbstractType
     {
         $builder->add('title', 'text');
         $builder->add('notes', 'textarea');
-        $builder->add('due', 'datetime');
+        $builder->add('due', 'date');
         $builder->add('Créer', 'submit');
     }
 

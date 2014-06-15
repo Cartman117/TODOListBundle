@@ -1,0 +1,25 @@
+{% extends 'TODOListBundle:Base:index.html.twig' %}
+
+{% block title %}
+    Tasks {{ parent() }}
+{% endblock %}
+
+{% block header %}
+    <div class="container">
+        <h1>Tasks</h1>
+    </div>
+{% endblock %}
+
+{% block menu %}
+    {{ parent() }}
+    <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+            <li>
+                <a href="{{ path("todolist_list_tasks", {"idTaskList" : app.request.get("idTaskList")}) }}">Back to the TaskList</a>
+            </li>
+            <li>
+                <a href="{{ path("todolist_new_tasks", { "idTaskList" : app.request.get("idTaskList")}) }}">Create a new task</a>
+            </li>
+        </ul>
+    </div>
+{% endblock %}
