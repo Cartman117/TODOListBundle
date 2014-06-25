@@ -3,7 +3,7 @@
 {% block content %}
     <label for="message"><h3><span class="label label-default label-purple">Manage your TaskLists</span></h3></label><br/>
 
-    {% if taskLists|length > 0 %}
+    {% if taskLists.data|length > 0 %}
         {% for taskList in taskLists %}
             <div class="panel panel-default panel-tweet">
                 <div class="panel-heading">

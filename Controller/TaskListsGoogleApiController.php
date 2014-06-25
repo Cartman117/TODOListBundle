@@ -42,7 +42,7 @@ class TaskListsGoogleApiController extends Controller implements TaskListsInterf
 
         $taskList = new \Google_Service_Tasks_TaskList();
 
-        $form = $this->createForm(new TaskListsType());
+        $form = $this->createForm(new TaskListsType(false, '\Google_Service_Tasks_TaskList'));
 
         $form->handleRequest($request);
         if($form->isValid()){

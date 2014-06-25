@@ -8,6 +8,8 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 class TaskListsType extends AbstractType
 {
     private $update;
+    private $dataClass;
+
     public function  __construct($update = false, $dataClass = "Acme\TODOListBundle\Entity\TaskLists")
     {
         $this->update = $update;

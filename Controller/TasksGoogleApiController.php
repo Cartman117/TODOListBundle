@@ -12,7 +12,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Acme\TODOListBundle\Controller\TasksInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Request;
-use Acme\TODOListBundle\Form\Type\TasksGoogleApiType;
+use Acme\TODOListBundle\Form\Type\TasksType;
+use Acme\TODOListBundle\Entity\Tasks;
 use HappyR\Google\ApiBundle\Services\GoogleClient;
 
 class TasksGoogleApiController extends Controller implements TasksInterface{
@@ -43,13 +44,13 @@ class TasksGoogleApiController extends Controller implements TasksInterface{
 
         $task = new \Google_Service_Tasks_Task();
 
-        $form = $this->createForm(new TasksGoogleApiType());
+        $form = $this->createForm(new TasksType(false));
 
         $form->handleRequest($request);
         if($form->isValid()){
-            $task->setTitle($form->getData()["title"]);
-            $task->setNotes($form->getData()["notes"]);
-            $task->setDue($form->getData()["due"]);
+            $task->setTitle($form->getData()->getTitle());
+            $task->setNotes($form->getData()->getNotes());
+            $task->setDue($form->getData()->getDue());
             $task->setParent($idTaskList);
             $service->tasks->insert($idTaskList, $task);
 
@@ -63,7 +64,7 @@ class TasksGoogleApiController extends Controller implements TasksInterface{
     {
         $service = $this->getGoogleServiceTasks();
 
-        $idTask = $request->request->get('idTask');
+        $idTask = $request->request->get('id');
         $service->tasks->delete($idTaskList, $idTask);
 
         return $this->redirect($this->generateUrl("todolist_googleapi_list_tasks", ["idTaskList" => $idTaskList]));
@@ -73,34 +74,21 @@ class TasksGoogleApiController extends Controller implements TasksInterface{
     {
         $service = $this->getGoogleServiceTasks();
 
-        $tasks = $service->tasks->listTasks($idTaskList);
-        $finalTasks = [-1 => "Do not move"];
-        foreach($tasks as $t){
-            if($t->getId() != $idTask){
-                $finalTasks[$t->getId()] = $t->getTitle();
-            }
-            else{
-                $task = $t;
-            }
-        }
+        $taskGoogleApi = $service->tasks->get($idTaskList, $idTask);
 
-        $form = $this->createFormBuilder()
-            ->add('title', 'text', ['data' => $task->getTitle()])
-            ->add('notes', 'textarea', ['data' => $task->getNotes()])
-            ->add('due', 'datetime', ['data' => $task->getDue()])
-            ->add('newIdTask', 'choice', ['choices' => $finalTasks])
-            ->add('Update', 'submit')
-            ->getForm();
+        $task = new Tasks();
+        $task->setTitle($taskGoogleApi->getTitle());
+        $task->setNotes($taskGoogleApi->getNotes());
+        $task->setDue($taskGoogleApi->getDue());
+
+        $form = $this->createForm(new TasksType(true), $task);
 
         $form->handleRequest($request);
         if($form->isValid()){
-            $task->setTitle($form->getData()["title"]);
-            $task->setNotes($form->getData()["notes"]);
-            $task->setDue($form->getData()["due"]);
-            $service->tasks->update($idTaskList, $idTask ,$task);
-            if($form->getData()["newIdTask"] !== -1){
-                $service->tasks->move($idTaskList, $idTask, ["parent" => $form->getData()["newIdTaskList"]]);
-            }
+            $taskGoogleApi->setTitle($form->getData()->getTitle());
+            $taskGoogleApi->setNotes($form->getData()->getNotes());
+            $taskGoogleApi->setDue($form->getData()->getDue());
+            $service->tasks->update($idTaskList, $idTask ,$taskGoogleApi);
 
             return $this->redirect($this->generateUrl("todolist_googleapi_list_tasks", ["idTaskList" => $idTaskList]));
         }

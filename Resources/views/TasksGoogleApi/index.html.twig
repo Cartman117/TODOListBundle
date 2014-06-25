@@ -1,27 +1,34 @@
-{% extends 'TODOListBundle:Base:index.html.twig' %}
-
-{% block title %}
-    TaskLists {{ parent() }}
-{% endblock %}
-
-{% block header %}
-    <h1>TaskLists</h1>
-{% endblock %}
+{% extends 'TODOListBundle:Base:taskGoogleApi.base.html.twig' %}
 
 {% block content %}
-    <a href="{{ path("todolist_googleapi_new_tasks", { "idTaskList" : app.request.get("idTaskList")}) }}">New task</a>
+    <label for="message"><h3><span class="label label-default label-purple">Manage your Tasks</span></h3></label><br/>
+
     {% if tasks.data|length > 0 %}
-        <ul>
-            {% for task in tasks %}
-                <li>
+        {% for task in tasks %}
+            <div class="panel panel-default panel-tweet">
+                <div class="panel-heading">
+                    {{ task.title }}
+                </div>
+                {% if task.notes is not empty %}
+                    <div class="panel-body">
+                        {{ task.notes }}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="panel panel-default panel-tweet-more">
+                <div class="panel-body">
+                    <a class="btn btn-default" href="{{ path("todolist_googleapi_update_tasks", { "idTask" : task.id, "idTaskList" : app.request.get("idTaskList")}) }}">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </a>
                     <form name="form" action="{{ path("todolist_googleapi_delete_tasks", { "idTaskList" : app.request.get("idTaskList")}) }}" method="post">
-                        <input type="hidden" name="idTask" value="{{ task.id }}"/>
-                        <input type="submit" value="Delete" name="delete"/>
+                        <input type="hidden" name="id" value="{{ task.id }}"/>
+                        <button type="submit" value="Delete" name="delete" class="btn btn-default">
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </button>
                     </form>
-                    <a href="{{ path("todolist_googleapi_update_tasks", { "idTask" : task.id, "idTaskList" : app.request.get("idTaskList")}) }}">Update</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-                    {{ task.title }} : {{ task.notes }}
-                </li>
-            {% endfor %}
-        </ul>
+                </div>
+            </div>
+            <br/>
+        {% endfor %}
     {% endif %}
 {% endblock %}

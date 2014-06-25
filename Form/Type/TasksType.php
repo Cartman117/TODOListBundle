@@ -15,9 +15,12 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 class TasksType extends AbstractType {
 
     private $update;
-    public function  __construct($update = false)
+    private $dataClass;
+
+    public function  __construct($update = false, $dataClass = "Acme\TODOListBundle\Entity\Tasks")
     {
         $this->update = $update;
+        $this->dataClass = $dataClass;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -44,7 +47,7 @@ class TasksType extends AbstractType {
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Acme\TODOListBundle\Entity\Tasks'
+            'data_class' => $this->dataClass
         ));
     }
 
