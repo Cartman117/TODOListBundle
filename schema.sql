@@ -15,6 +15,7 @@ CREATE TABLE IF NOT EXISTS tasks(
   id int NOT NULL AUTO_INCREMENT,
   parent int NOT NULL,
   title VARCHAR(255) NOT NULL,
+  status VARCHAR(11) NOT NULL,
   notes TEXT,
   due DATETIME,
   PRIMARY KEY (id),
