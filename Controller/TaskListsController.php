@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Kevin
- * Date: 27/05/14
- * Time: 16:03
- */
-
 namespace Acme\TODOListBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -14,14 +7,23 @@ use Acme\TODOListBundle\Form\Type\TaskListsType;
 use Acme\TODOListBundle\Controller\TaskListsInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-
+/**
+ * Class TaskListsController
+ * @package Acme\TODOListBundle\Controller
+ */
 class TaskListsController extends Controller implements TaskListsInterface
 {
+    /**
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function indexAction()
     {
         return $this->redirect($this->generateUrl("todolist_list_tasklists"));
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function getTaskListsAction()
     {
         $repository = $this->getDoctrine()->getRepository('TODOListBundle:TaskLists');
@@ -30,6 +32,10 @@ class TaskListsController extends Controller implements TaskListsInterface
         return $this->render('TODOListBundle:TaskLists:index.html.twig', ['taskLists' => $taskLists]);
     }
 
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
     public function newTaskListAction(Request $request)
     {
         $taskList = new TaskLists();
@@ -48,6 +54,11 @@ class TaskListsController extends Controller implements TaskListsInterface
         return $this->render('TODOListBundle:TaskLists:newTaskListForm.html.twig', ['form' => $form->createView()]);
     }
 
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     */
     public function deleteTaskListAction(Request $request)
     {
         $idTaskList = $request->request->get('id');
@@ -66,6 +77,12 @@ class TaskListsController extends Controller implements TaskListsInterface
         return $this->redirect($this->generateUrl("todolist_list_tasklists"));
     }
 
+    /**
+     * @param Request $request
+     * @param $idTaskList
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     */
     public function updateTaskListAction(Request $request, $idTaskList)
     {
         $repository = $this->getDoctrine()->getRepository('TODOListBundle:TaskLists');

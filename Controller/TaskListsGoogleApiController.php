@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Kevin
- * Date: 09/06/14
- * Time: 01:11
- */
-
 namespace Acme\TODOListBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -14,8 +7,15 @@ use Acme\TODOListBundle\Form\Type\TaskListsType;
 use Symfony\Component\HttpFoundation\Request;
 use HappyR\Google\ApiBundle\Services\GoogleClient;
 
-class TaskListsGoogleApiController extends Controller implements TaskListsInterface{
-
+/**
+ * Class TaskListsGoogleApiController
+ * @package Acme\TODOListBundle\Controller
+ */
+class TaskListsGoogleApiController extends Controller implements TaskListsInterface
+{
+    /**
+     * @return \Google_Service_Tasks
+     */
     public function getGoogleServiceTasks()
     {
         $client = $this->container->get("happyr.google.api.client");
@@ -27,6 +27,9 @@ class TaskListsGoogleApiController extends Controller implements TaskListsInterf
         return new \Google_Service_Tasks($googleClient);
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function getTaskListsAction()
     {
         $service = $this->getGoogleServiceTasks();
@@ -36,6 +39,10 @@ class TaskListsGoogleApiController extends Controller implements TaskListsInterf
         return $this->render('TODOListBundle:TaskListsGoogleApi:index.html.twig', ['taskLists' => $taskLists]);
     }
 
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
     public function newTaskListAction(Request $request)
     {
         $serviceTask = $this->getGoogleServiceTasks();
@@ -55,6 +62,10 @@ class TaskListsGoogleApiController extends Controller implements TaskListsInterf
         return $this->render('TODOListBundle:TaskListsGoogleApi:newTaskListForm.html.twig', ['form' => $form->createView()]);
     }
 
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function deleteTaskListAction(Request $request)
     {
         $service = $this->getGoogleServiceTasks();
@@ -65,6 +76,11 @@ class TaskListsGoogleApiController extends Controller implements TaskListsInterf
         return $this->redirect($this->generateUrl("todolist_googleapi_list_taskslists"));
     }
 
+    /**
+     * @param Request $request
+     * @param $idTaskList
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
     public function updateTaskListAction(Request $request, $idTaskList)
     {
         $service = $this->getGoogleServiceTasks();

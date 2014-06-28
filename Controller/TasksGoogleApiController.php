@@ -13,8 +13,8 @@ use HappyR\Google\ApiBundle\Services\GoogleClient;
  * Class TasksGoogleApiController
  * @package Acme\TODOListBundle\Controller
  */
-class TasksGoogleApiController extends Controller implements TasksInterface{
-
+class TasksGoogleApiController extends Controller implements TasksInterface
+{
     /**
      * @return \Google_Service_Tasks
      */
