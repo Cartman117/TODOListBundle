@@ -6,6 +6,7 @@ todolist_list_homepage:
     pattern:  /TODOList
     defaults: { _controller: TODOListBundle:TaskLists:index }
 
+# LOCAL STORAGE #
 todolist_list_tasklists:
     pattern:  /TODOList/lists
     defaults: { _controller: TODOListBundle:TaskLists:getTaskLists }
@@ -43,6 +44,11 @@ todolist_update_tasks:
       idTaskList: \d+
       idTask: \d+
 
+todolist_status_tasks:
+    pattern: /TODOList/lists/{idTaskList}/tasks/status/{idTask}
+    defaults: { _controller: TODOListBundle:Tasks:statusTask }
+
+# Google Api #
 todolist_oauth_callback:
     pattern: /TODOList/oauth/callback
     defaults: { _controller: TODOListBundle:OAuth:callback }
@@ -82,3 +88,7 @@ todolist_googleapi_delete_tasks:
 todolist_googleapi_update_tasks:
     pattern: /TODOList/googleapi/lists/{idTaskList}/tasks/update/{idTask}
     defaults: { _controller: TODOListBundle:TasksGoogleApi:updateTask }
+
+todolist_googleapi_status_tasks:
+    pattern: /TODOList/googleapi/lists/{idTaskList}/tasks/status/{idTask}
+    defaults: { _controller: TODOListBundle:TasksGoogleApi:statusTask }

@@ -10,6 +10,7 @@
     <field name="title" type="string" column="title" length="255" nullable="false"/>
     <field name="notes" type="text" column="notes" nullable="true"/>
     <field name="due" type="datetime" column="due" nullable="true"/>
+    <field name="status" type="string" column="status" length="11" nullable="true"/>
     <many-to-one field="parent" target-entity="TaskLists">
       <join-columns>
         <join-column name="parent" referenced-column-name="id"/>

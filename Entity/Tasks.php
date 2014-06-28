@@ -20,6 +20,11 @@ class Tasks
     private $notes;
 
     /**
+     * @var status
+     */
+    private $status;
+
+    /**
      * @var \DateTime
      */
     private $due;
@@ -51,11 +56,34 @@ class Tasks
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {
         return $this->title;
+    }
+
+    /**
+     * Set status
+     *
+     * @param string $status
+     * @return Tasks
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return string
+     */
+    public function getStatus()
+    {
+        return $this->status;
     }
 
     /**
