@@ -30,6 +30,7 @@ todo_list:
 </code>
 
 And this into your /app/config/security.yml
+
 <code>
 security:
     providers:
