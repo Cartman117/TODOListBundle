@@ -54,11 +54,9 @@ class OAuthController extends Controller
         return $this->redirect($this->generateUrl("todolist_googleapi_list_taskslists"));
     }
 
-    public function exitAction()
+    public function exitAction(Request $request)
     {
-        $session = new Session();
-        $session->remove("token");
-
-        return $this->render('TODOListBundle:Default:index.html.twig');
+        $this->get('security.context')->setToken(null);
+        return $this->redirect($this->generateUrl("todolist_homepage"));
     }
 } 

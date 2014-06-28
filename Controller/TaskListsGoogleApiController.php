@@ -62,7 +62,7 @@ class TaskListsGoogleApiController extends Controller implements TaskListsInterf
         $idTaskList = $request->request->get('id');
         $service->tasklists->delete($idTaskList);
 
-        return $this->redirect($this->generateUrl("todolist_googleapi_list_taskslist"));
+        return $this->redirect($this->generateUrl("todolist_googleapi_list_taskslists"));
     }
 
     public function updateTaskListAction(Request $request, $idTaskList)

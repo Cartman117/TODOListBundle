@@ -2,11 +2,10 @@
 
 namespace Acme\TODOListBundle\Security\Authorization;
 
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
-use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Http\Authorization\AccessDeniedHandlerInterface;
 use HappyR\Google\ApiBundle\Services\GoogleClient;
@@ -14,9 +13,11 @@ use HappyR\Google\ApiBundle\Services\GoogleClient;
 class AccessDeniedHandler implements AccessDeniedHandlerInterface
 {
     private $client;
+    private $router;
 
-    public function __construct(GoogleClient $client)
+    public function __construct(GoogleClient $client, RouterInterface $router)
     {
+        $this->router = $router;
         $this->client = $client->getGoogleClient();
         $this->client->setScopes([
             'https://www.googleapis.com/auth/tasks'
@@ -34,16 +35,16 @@ class AccessDeniedHandler implements AccessDeniedHandlerInterface
     public function onKernelException(GetResponseForExceptionEvent $event)
     {
         $exception = $event->getException();
-        $message = 'Erreur: ' . $exception->getMessage() . ' avec le code: ' . $exception->getCode();
 
-        $response = new Response();
-        $response->setContent($message);
+        if ($exception instanceof \Google_Service_Exception) {
+            $response = new RedirectResponse("http://localhost/");
+            $response->setContent("HEY ".$exception->getMessage());
+            $response->setStatusCode($exception->getCode());
 
-        //400 : session vidée
-        if ($exception instanceof \Google_Auth_Exception) {
-            $response->setStatusCode($exception->getStatusCode());
-            $response->headers->replace($exception->getHeaders());
             $event->setResponse($response);
+        }
+        if ($exception instanceof \Google_Auth_Exception) {
+            $this->handle(new Request(), new AccessDeniedException());
         }
     }
 }
