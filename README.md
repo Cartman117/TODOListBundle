@@ -36,7 +36,6 @@ security:
     providers:
         in_memory:
             memory: ~
-
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
