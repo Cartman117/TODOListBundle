@@ -44,7 +44,7 @@ class AccessDeniedHandler implements AccessDeniedHandlerInterface
             $event->setResponse($response);
         }
         if ($exception instanceof \Google_Auth_Exception) {
-            $this->handle(new Request(), new AccessDeniedException());
+            $event->setResponse($this->handle(new Request(), new AccessDeniedException()));
         }
     }
 }

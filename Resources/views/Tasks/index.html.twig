@@ -7,11 +7,11 @@
         {% for task in tasks %}
             <div class="panel panel-default panel-tweet">
                 <div class="panel-heading">
-                    {{ task.title }}
+                    {% if task.status == "completed" %} <s> {%  endif %} {{ task.title }} {% if task.status == "completed" %} </s> {%  endif %}
                 </div>
                 {% if task.notes is not empty %}
                     <div class="panel-body">
-                        {{ task.notes }}
+                        {% if task.status == "completed" %} <s> {%  endif %} {{ task.notes }} {% if task.status == "completed" %} </s> {%  endif %}
                     </div>
                 {% endif %}
             </div>
@@ -24,6 +24,16 @@
                         <input type="hidden" name="id" value="{{ task.id }}"/>
                         <button type="submit" value="Delete" name="delete" class="btn btn-default">
                             <span class="glyphicon glyphicon-trash"></span>
+                        </button>
+                    </form>
+                    <form name="form" action="{{ path("todolist_status_tasks", { "idTask" : task.id, "idTaskList" : app.request.get("idTaskList")}) }}" method="post">
+                        <input type="hidden" name="id" value="{{ task.id }}"/>
+                        <button type="submit" value="Status" name="status" class="btn btn-default">
+                            {% if task.status == "completed" %}
+                                <span class="glyphicon glyphicon-export"></span>
+                            {%  else %}
+                                <span class="glyphicon glyphicon-import"></span>
+                            {%  endif %}
                         </button>
                     </form>
                 </div>

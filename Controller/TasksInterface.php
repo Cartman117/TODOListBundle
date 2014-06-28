@@ -18,4 +18,6 @@ interface TasksInterface{
     public function deleteTaskAction(Request $request, $idTaskList);
 
     public function updateTaskAction(Request $request, $idTaskList, $idTask);
+
+    public function statusTaskAction(Request $request, $idTaskList, $idTask);
 }

@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Kevin
- * Date: 27/05/14
- * Time: 16:03
- */
-
 namespace Acme\TODOListBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -17,6 +10,10 @@ use Symfony\Component\HttpFoundation\Request;
 class TasksController extends Controller implements TasksInterface
 {
 
+    /**
+     * @param $idTaskList
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function getTasksAction($idTaskList)
     {
         $repository = $this->getDoctrine()->getRepository('TODOListBundle:Tasks');
@@ -25,6 +22,11 @@ class TasksController extends Controller implements TasksInterface
         return $this->render('TODOListBundle:Tasks:index.html.twig', array('tasks' => $tasks));
     }
 
+    /**
+     * @param Request $request
+     * @param $idTaskList
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
     public function newTaskAction(Request $request, $idTaskList)
     {
         $task = new Tasks();
@@ -47,6 +49,12 @@ class TasksController extends Controller implements TasksInterface
         return $this->render('TODOListBundle:Tasks:newTaskForm.html.twig', ["form" => $form->createView()]);
     }
 
+    /**
+     * @param Request $request
+     * @param $idTaskList
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     */
     public function deleteTaskAction(Request $request, $idTaskList)
     {
         $idTask = $request->request->get('id');
@@ -65,6 +73,13 @@ class TasksController extends Controller implements TasksInterface
         return $this->redirect($this->generateUrl("todolist_list_tasks", ['idTaskList' => $idTaskList]));
     }
 
+    /**
+     * @param Request $request
+     * @param $idTaskList
+     * @param $idTask
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     */
     public function updateTaskAction(Request $request, $idTaskList, $idTask)
     {
         $repository = $this->getDoctrine()->getRepository('TODOListBundle:Tasks');
@@ -86,4 +101,32 @@ class TasksController extends Controller implements TasksInterface
 
         return $this->render('TODOListBundle:Tasks:updateTaskForm.html.twig', ["form" => $form->createView()]);
     }
-} 
+
+    /**
+     * @param Request $request
+     * @param $idTaskList
+     * @param $idTask
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     */
+    public function statusTaskAction(Request $request, $idTaskList, $idTask)
+    {
+        $repository = $this->getDoctrine()->getRepository('TODOListBundle:Tasks');
+        $task = $repository->findOneById($idTask);
+
+        if(empty($task)){
+            throw $this->createNotFoundException("La tache n'existe pas");
+        }
+
+        if($task->getStatus() === "completed"){
+            $task->setStatus("needsAction");
+        }
+        else{
+            $task->setStatus("completed");
+        }
+        $manager = $this->getDoctrine()->getManager();
+        $manager->flush();
+
+        return $this->redirect($this->generateUrl("todolist_list_tasks", ['idTaskList' => $idTaskList]));
+    }
+}
