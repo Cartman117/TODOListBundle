@@ -12,44 +12,44 @@ class TaskLists
     /**
      * @var string
      */
-    private $name;
+    private $title;
 
     /**
      * @var integer
      */
-    private $idList;
+    private $id;
 
 
     /**
-     * Set name
+     * Set title
      *
-     * @param string $name
-     * @return TaskLists
+     * @param string $title
+     * @return Tasklists
      */
-    public function setName($name)
+    public function setTitle($title)
     {
-        $this->name = $name;
+        $this->title = $title;
 
         return $this;
     }
 
     /**
-     * Get name
+     * Get title
      *
      * @return string 
      */
-    public function getName()
+    public function getTitle()
     {
-        return $this->name;
+        return $this->title;
     }
 
     /**
-     * Get idList
+     * Get id
      *
      * @return integer 
      */
-    public function getIdList()
+    public function getId()
     {
-        return $this->idList;
+        return $this->id;
     }
 }

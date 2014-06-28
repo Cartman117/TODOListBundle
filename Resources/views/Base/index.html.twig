@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% block head %}
+            <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"/>
+            <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css" />
+            <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+            {% stylesheets filter='cssrewrite' '@TODOListBundle/Resources/public/css/*' output='css/main.css'%}
+                <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+            {% endstylesheets %}
+
+            <title>{% block title %}{% endblock %} - Google Api Tasks</title>
+        {% endblock %}
+    </head>
+    <body>
+        <header class="page-header navbar navbar-static-top">
+            {%  block header %}{% endblock %}
+        </header>
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container">
+                {% block menu %}
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="{{ path("todolist_list_tasklists") }}">Index</a>
+                    </div>
+                {% endblock %}
+            </div>
+        </nav>
+        <div id="body" class="container">
+            {% block content %}{% endblock %}
+        </div>
+        <footer>
+            <div class="container">
+                {% block footer %}
+                    &copy; Copyright 2014 to <a href="https://github.com/Cartman117">Kévin PIGNOT</a> and <a href="https://github.com/ss-bb">Olivier GOYON</a>.
+                {% endblock %}
+            </div>
+        </footer>
+        {% javascripts '@TODOListBundle/Resources/public/js/*' %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+    </body>
+</html>

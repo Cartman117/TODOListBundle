@@ -1,3 +1,15 @@
-{{ form_start(form) }}
-    {{ form_row(form.idList, {"value" : app.request.get("idTaskList")}) }}
-{{ form_end(form) }}
+{% extends 'TODOListBundle:Base:task.base.html.twig' %}
+
+{% block content %}
+    <label for="message"><h3><span class="label label-default label-purple">Create your Task</span></h3></label><br/>
+
+    {{ form_start(form) }}
+    {{ form_row(form.title) }}
+    <br/>
+    {{ form_row(form.notes) }}
+    <br/>
+    {{ form_row(form.due) }}
+    <br/>
+    {{ form_row(form.Create) }}
+    {{ form_end(form) }}
+{% endblock %}

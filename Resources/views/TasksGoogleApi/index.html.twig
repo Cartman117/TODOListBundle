@@ -1,9 +1,9 @@
-{% extends 'TODOListBundle:Base:task.base.html.twig' %}
+{% extends 'TODOListBundle:Base:taskGoogleApi.base.html.twig' %}
 
 {% block content %}
     <label for="message"><h3><span class="label label-default label-purple">Manage your Tasks</span></h3></label><br/>
 
-    {% if tasks|length > 0 %}
+    {% if tasks.data|length > 0 %}
         {% for task in tasks %}
             <div class="panel panel-default panel-tweet">
                 <div class="panel-heading">
@@ -17,10 +17,10 @@
             </div>
             <div class="panel panel-default panel-tweet-more">
                 <div class="panel-body">
-                    <a class="btn btn-default" href="{{ path("todolist_update_tasks", { "idTask" : task.id, "idTaskList" : app.request.get("idTaskList")}) }}">
+                    <a class="btn btn-default" href="{{ path("todolist_googleapi_update_tasks", { "idTask" : task.id, "idTaskList" : app.request.get("idTaskList")}) }}">
                         <span class="glyphicon glyphicon-pencil"></span>
                     </a>
-                    <form name="form" action="{{ path("todolist_delete_tasks", { "idTaskList" : app.request.get("idTaskList")}) }}" method="post">
+                    <form name="form" action="{{ path("todolist_googleapi_delete_tasks", { "idTaskList" : app.request.get("idTaskList")}) }}" method="post">
                         <input type="hidden" name="id" value="{{ task.id }}"/>
                         <button type="submit" value="Delete" name="delete" class="btn btn-default">
                             <span class="glyphicon glyphicon-trash"></span>

@@ -11,19 +11,27 @@ namespace Acme\TODOListBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Acme\TODOListBundle\Entity\TaskLists;
 use Acme\TODOListBundle\Form\Type\TaskListsType;
+use Acme\TODOListBundle\Controller\TaskListsInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 
-class TaskListsController extends Controller{
+class TaskListsController extends Controller implements TaskListsInterface
+{
+    public function indexAction()
+    {
+        return $this->redirect($this->generateUrl("todolist_list_tasklists"));
+    }
 
-    public function getTaskListsAction() {
+    public function getTaskListsAction()
+    {
         $repository = $this->getDoctrine()->getRepository('TODOListBundle:TaskLists');
         $taskLists = $repository->findAll();
 
         return $this->render('TODOListBundle:TaskLists:index.html.twig', ['taskLists' => $taskLists]);
     }
 
-    public function newTaskListAction(Request $request) {
+    public function newTaskListAction(Request $request)
+    {
         $taskList = new TaskLists();
 
         $form = $this->createForm(new TaskListsType(), $taskList);
@@ -40,11 +48,12 @@ class TaskListsController extends Controller{
         return $this->render('TODOListBundle:TaskLists:newTaskListForm.html.twig', ['form' => $form->createView()]);
     }
 
-    public function deleteTaskListAction(Request $request){
-        $idTaskList = $request->request->get('idList');
+    public function deleteTaskListAction(Request $request)
+    {
+        $idTaskList = $request->request->get('id');
 
         $repository = $this->getDoctrine()->getRepository('TODOListBundle:TaskLists');
-        $taskList = $repository->findOneByIdList($idTaskList);
+        $taskList = $repository->findOneById($idTaskList);
 
         if(empty($taskList)){
             throw $this->createNotFoundException("La liste de taches n'existe pas");
@@ -57,15 +66,16 @@ class TaskListsController extends Controller{
         return $this->redirect($this->generateUrl("todolist_list_tasklists"));
     }
 
-    public function updateTaskListAction($idTaskList, Request $request){
+    public function updateTaskListAction(Request $request, $idTaskList)
+    {
         $repository = $this->getDoctrine()->getRepository('TODOListBundle:TaskLists');
-        $taskList = $repository->findOneByIdList($idTaskList);
+        $taskList = $repository->findOneById($idTaskList);
 
         if(empty($taskList)){
             throw $this->createNotFoundException("La liste de taches n'existe pas");
         }
 
-        $form = $this->createForm(new TaskListsType(), $taskList);
+        $form = $this->createForm(new TaskListsType(true), $taskList);
 
         $form->handleRequest($request);
         if($form->isValid()){
@@ -75,6 +85,6 @@ class TaskListsController extends Controller{
             return $this->redirect($this->generateUrl("todolist_list_tasklists"));
         }
 
-        return $this->render('TODOListBundle:TaskLists:newTaskListForm.html.twig', ['form' => $form->createView()]);
+        return $this->render('TODOListBundle:TaskLists:updateTaskListForm.html.twig', ['form' => $form->createView()]);
     }
 }

@@ -8,26 +8,46 @@
 
 namespace Acme\TODOListBundle\Form\Type;
 
-use Proxies\__CG__\Acme\TODOListBundle\Entity\Tasklists;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class TasksType extends AbstractType {
+
+    private $update;
+    private $dataClass;
+
+    public function  __construct($update = false, $dataClass = "Acme\TODOListBundle\Entity\Tasks")
+    {
+        $this->update = $update;
+        $this->dataClass = $dataClass;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name', 'text');
-        $builder->add('detail', 'textarea');
-        $builder->add('endDate', 'datetime');
-        $builder->add('idList', 'entity', array('class' => 'TODOListBundle:TaskLists',
-                                                'property' => 'idList'));
-        $builder->add('Créer', 'submit');
+        $builder->add('title', 'text', ["label" => false,
+                                        "attr" => ["placeholder" => "Title",
+                                                   "class" => "form-control"]]);
+        $builder->add('notes', 'textarea', ["label" => false,
+                                            "required" => false,
+                                            "attr" => ["placeholder" => "Notes",
+                                                       "class" => "form-control"]]);
+        $builder->add('due', 'date', ["label" => false,
+                                      "attr" => ["placeholder" => "Due",
+                                                 "class" => "form-control"]]);
+
+        if($this->update){
+            $builder->add("Update", "submit", ["attr" => ["class" => "form-control"]]);
+        }
+        else{
+            $builder->add("Create", "submit", ["attr" => ["class" => "form-control"]]);
+        }
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Acme\TODOListBundle\Entity\Tasks'
+            'data_class' => $this->dataClass
         ));
     }
 
