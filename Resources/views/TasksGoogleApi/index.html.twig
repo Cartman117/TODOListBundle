@@ -27,7 +27,6 @@
                         </button>
                     </form>
                     <form name="form" action="{{ path("todolist_googleapi_status_tasks", { "idTask" : task.id, "idTaskList" : app.request.get("idTaskList")}) }}" method="post">
-                        <input type="hidden" name="id" value="{{ task.id }}"/>
                         <button type="submit" value="Status" name="status" class="btn btn-default">
                             {% if task.status == "completed" %}
                                 <span class="glyphicon glyphicon-export"></span>

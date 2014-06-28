@@ -129,6 +129,7 @@ class TasksGoogleApiController extends Controller implements TasksInterface
         $taskGoogleApi = $service->tasks->get($idTaskList, $idTask);
         if($taskGoogleApi->getStatus() === "completed"){
             $taskGoogleApi->setStatus("needsAction");
+            $taskGoogleApi->setCompleted(null);
         }
         else{
             $taskGoogleApi->setStatus("completed");
