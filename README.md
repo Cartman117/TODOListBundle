@@ -32,25 +32,27 @@ todo_list:
 And this into your /app/config/security.yml
 
 <code>
-security:
-    providers:
-        in_memory:
-            memory: ~
-    firewalls:
-        dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
-            security: false
 
-        default:
-            pattern:  ^/
-            simple_preauth:
-                authenticator: todolist_authenticator
-            access_denied_handler: todolist_access_denied_handler
-
-    access_control:
-        - { path: ^/TODOList/oauth/callback$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/TODOList/lists, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/, roles: ROLE_HAS_TOKEN }
+    security:
+        providers:
+            in_memory:
+                memory: ~
+    
+        firewalls:
+            dev:
+                pattern: ^/(_(profiler|wdt)|css|images|js)/
+                security: false
+    
+            default:
+                pattern:  ^/
+                simple_preauth:
+                    authenticator: todolist_authenticator
+                access_denied_handler: todolist_access_denied_handler
+    
+        access_control:
+            - { path: ^/TODOList/oauth/callback$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+            - { path: ^/TODOList/lists, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+            - { path: ^/, roles: ROLE_HAS_TOKEN }
 </code>
 
 You must include [HappyR - GoogleApiBundle](https://github.com/HappyR/GoogleApiBundle) and add our Bundle into Symfony2 and register them in your AppKernel.php
