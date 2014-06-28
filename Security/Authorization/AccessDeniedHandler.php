@@ -38,7 +38,7 @@ class AccessDeniedHandler implements AccessDeniedHandlerInterface
 
         if ($exception instanceof \Google_Service_Exception) {
             $response = new RedirectResponse("http://localhost/");
-            $response->setContent("HEY ".$exception->getMessage());
+            $response->setContent($exception->getMessage());
             $response->setStatusCode($exception->getCode());
 
             $event->setResponse($response);
