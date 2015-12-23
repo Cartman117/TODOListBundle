@@ -21,15 +21,15 @@ Then you will have to configure Doctrine, to use your database in /app/config in
 </code>
 Add the follwing code into your /app/config/routing.yml
 
-<code>
+```
     todo_list:
         resource: "@TODOListBundle/Resources/config/routing.yml"
         prefix:   /
-</code>
+```
 
 This into you /app/config/config.yml
 
-<code>
+```
     happy_r_google_api:
         application_name:       "TODOListBundle"
         oauth2_client_id:       "XXXX"
@@ -52,11 +52,11 @@ This into you /app/config/config.yml
                 - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
         todolist_authenticator:
             class:      %todolist_authenticator%
-</code>
+```
 
 And this into your /app/config/security.yml
 
-<code>
+```
     security:
         providers:
             in_memory:
@@ -76,7 +76,7 @@ And this into your /app/config/security.yml
             - { path: ^/TODOList/oauth/callback, role: IS_AUTHENTICATED_ANONYMOUSLY }
             - { path: ^/TODOList/lists, role: IS_AUTHENTICATED_ANONYMOUSLY }
         access_denied_url: /TODOList/oauth/callback
-</code>
+```
 
 You must include [HappyR - GoogleApiBundle](https://github.com/HappyR/GoogleApiBundle) and add our Bundle into Symfony2 and register them in your AppKernel.php
 
