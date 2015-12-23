@@ -37,19 +37,23 @@ This into you /app/config/config.yml
         oauth2_redirect_uri:    "XXXX/TODOList/oauth/callback"
         developer_key:          "XXXX"
         site_name:              "XXXX/TODOList"
+
     parameters:
         todolist_google_client:         HappyR\Google\ApiBundle\Services\GoogleClient
         todolist_access_denied_handler: TODOListBundle\Security\Authorization\AccessDeniedHandler
         todolist_authenticator:         TODOListBundle\Security\Authentication\Authenticator
+    
     services:
         todolist_google_client:
             class:      %todolist_google_client%
             arguments:  [%happy_r_google_api%]
+       
         todolist_access_denied_handler:
             class:      %todolist_access_denied_handler%
             arguments:  [@todolist_google_client, @router]
             tags:
                 - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
+        
         todolist_authenticator:
             class:      %todolist_authenticator%
 ```
@@ -61,6 +65,7 @@ And this into your /app/config/security.yml
         providers:
             in_memory:
                 memory: ~
+
         firewalls:
             dev:
                 pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -70,11 +75,13 @@ And this into your /app/config/security.yml
                 simple_preauth:
                     authenticator: todolist_authenticator
                 access_denied_handler: todolist_access_denied_handler
+
         access_control:
             - { path: ^/$, role: IS_AUTHENTICATED_ANONYMOUSLY }
             - { path: ^/TODOList$, role: IS_AUTHENTICATED_ANONYMOUSLY }
             - { path: ^/TODOList/oauth/callback, role: IS_AUTHENTICATED_ANONYMOUSLY }
             - { path: ^/TODOList/lists, role: IS_AUTHENTICATED_ANONYMOUSLY }
+       
         access_denied_url: /TODOList/oauth/callback
 ```
 
