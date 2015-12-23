@@ -145,3 +145,6 @@ footer{
     color:#5cb85c;
 }
 
+.form-inline{
+    display: inline-block;
+}

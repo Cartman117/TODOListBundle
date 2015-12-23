@@ -1,6 +1,6 @@
 <?php
 
-namespace Acme\TODOListBundle\Security\Authorization;
+namespace TODOListBundle\Security\Authorization;
 
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -10,6 +10,10 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Http\Authorization\AccessDeniedHandlerInterface;
 use HappyR\Google\ApiBundle\Services\GoogleClient;
 
+/**
+ * Class AccessDeniedHandler
+ * @package TODOListBundle\Security\Authentication
+ */
 class AccessDeniedHandler implements AccessDeniedHandlerInterface
 {
     private $client;
@@ -37,7 +41,7 @@ class AccessDeniedHandler implements AccessDeniedHandlerInterface
         $exception = $event->getException();
 
         if ($exception instanceof \Google_Service_Exception) {
-            $response = new RedirectResponse("http://localhost/");
+            $response = new RedirectResponse("http://dev.kevin-pignot.fr/");
             $response->setContent($exception->getMessage());
             $response->setStatusCode($exception->getCode());
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Acme\TODOListBundle;
+namespace TODOListBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

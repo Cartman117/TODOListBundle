@@ -3,7 +3,7 @@
 {% block content %}
     <label for="message"><h3><span class="label label-default label-purple">Manage your Tasks</span></h3></label><br/>
 
-    {% if tasks.data|length > 0 %}
+    {% if tasks.modelData|length > 0 %}
         {% for task in tasks %}
             <div class="panel panel-default panel-tweet">
                 <div class="panel-heading">
@@ -20,13 +20,13 @@
                     <a class="btn btn-default" href="{{ path("todolist_googleapi_update_tasks", { "idTask" : task.id, "idTaskList" : app.request.get("idTaskList")}) }}">
                         <span class="glyphicon glyphicon-pencil"></span>
                     </a>
-                    <form name="form" action="{{ path("todolist_googleapi_delete_tasks", { "idTaskList" : app.request.get("idTaskList")}) }}" method="post">
+                    <form class="inline-form" name="form" action="{{ path("todolist_googleapi_delete_tasks", { "idTaskList" : app.request.get("idTaskList")}) }}" method="post">
                         <input type="hidden" name="id" value="{{ task.id }}"/>
                         <button type="submit" value="Delete" name="delete" class="btn btn-default">
                             <span class="glyphicon glyphicon-trash"></span>
                         </button>
                     </form>
-                    <form name="form" action="{{ path("todolist_googleapi_status_tasks", { "idTask" : task.id, "idTaskList" : app.request.get("idTaskList")}) }}" method="post">
+                    <form class="inline-form" name="form" action="{{ path("todolist_googleapi_status_tasks", { "idTask" : task.id, "idTaskList" : app.request.get("idTaskList")}) }}" method="post">
                         <button type="submit" value="Status" name="status" class="btn btn-default">
                             {% if task.status == "completed" %}
                                 <span class="glyphicon glyphicon-export"></span>

@@ -1,17 +1,17 @@
 <?php
-namespace Acme\TODOListBundle\Controller;
+namespace TODOListBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Acme\TODOListBundle\Controller\TasksInterface;
+use TODOListBundle\Controller\TasksInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Request;
-use Acme\TODOListBundle\Form\Type\TasksType;
-use Acme\TODOListBundle\Entity\Tasks;
+use TODOListBundle\Form\Type\TasksType;
+use TODOListBundle\Entity\Tasks;
 use HappyR\Google\ApiBundle\Services\GoogleClient;
 
 /**
  * Class TasksGoogleApiController
- * @package Acme\TODOListBundle\Controller
+ * @package TODOListBundle\Controller
  */
 class TasksGoogleApiController extends Controller implements TasksInterface
 {
@@ -22,7 +22,7 @@ class TasksGoogleApiController extends Controller implements TasksInterface
     {
         $client = $this->container->get("happyr.google.api.client");
         $googleClient = $client->getGoogleClient();
-        $this->securityContext = $this->get("security.context");
+        $this->securityContext = $this->get("security.token_storage");
         $token = $this->securityContext->getToken();
         $googleClient->setAccessToken($token->getUser());
 
@@ -53,10 +53,11 @@ class TasksGoogleApiController extends Controller implements TasksInterface
 
         $task = new \Google_Service_Tasks_Task();
 
-        $form = $this->createForm(new TasksType(false));
+        $options = ["update" => FALSE];
+        $form = $this->createForm(TasksType::class, NULL, $options);
 
         $form->handleRequest($request);
-        if($form->isValid()){
+        if($form->isSubmitted() && $form->isValid()){
             $task->setTitle($form->getData()->getTitle());
             $task->setNotes($form->getData()->getNotes());
             $task->setDue($form->getData()->getDue());
@@ -99,15 +100,20 @@ class TasksGoogleApiController extends Controller implements TasksInterface
         $task = new Tasks();
         $task->setTitle($taskGoogleApi->getTitle());
         $task->setNotes($taskGoogleApi->getNotes());
-        $task->setDue($taskGoogleApi->getDue());
+        $due = new \DateTime();
+        if (!empty($taskGoogleApi->getDue())) {
+            $due = \DateTime::createFromFormat("Y-m-d\TH:i:s.000\Z", $taskGoogleApi->getDue());
+        }
+        $task->setDue($due);
 
-        $form = $this->createForm(new TasksType(true), $task);
+        $options = ["update" => TRUE];
+        $form = $this->createForm(TasksType::class, $task, $options);
 
         $form->handleRequest($request);
-        if($form->isValid()){
+        if ($form->isValid()) {
             $taskGoogleApi->setTitle($form->getData()->getTitle());
             $taskGoogleApi->setNotes($form->getData()->getNotes());
-            $taskGoogleApi->setDue($form->getData()->getDue());
+            $taskGoogleApi->setDue($form->getData()->getDue()->format("Y-m-d\TH:i:s.000\Z"));
             $service->tasks->update($idTaskList, $idTask ,$taskGoogleApi);
 
             return $this->redirect($this->generateUrl("todolist_googleapi_list_tasks", ["idTaskList" => $idTaskList]));
@@ -127,11 +133,10 @@ class TasksGoogleApiController extends Controller implements TasksInterface
         $service = $this->getGoogleServiceTasks();
 
         $taskGoogleApi = $service->tasks->get($idTaskList, $idTask);
-        if($taskGoogleApi->getStatus() === "completed"){
+        if ($taskGoogleApi->getStatus() === "completed") {
             $taskGoogleApi->setStatus("needsAction");
             $taskGoogleApi->setCompleted(null);
-        }
-        else{
+        } else {
             $taskGoogleApi->setStatus("completed");
         }
         $service->tasks->update($idTaskList, $idTask ,$taskGoogleApi);

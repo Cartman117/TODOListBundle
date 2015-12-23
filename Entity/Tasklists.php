@@ -1,11 +1,12 @@
 <?php
 
-namespace Acme\TODOListBundle\Entity;
+namespace TODOListBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * TaskLists
+ * Class TaskLists
+ * @package TODOListBundle\Entity
  */
 class TaskLists
 {
@@ -24,7 +25,7 @@ class TaskLists
      * Set title
      *
      * @param string $title
-     * @return Tasklists
+     * @return TaskLists
      */
     public function setTitle($title)
     {

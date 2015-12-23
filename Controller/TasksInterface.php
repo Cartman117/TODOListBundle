@@ -5,13 +5,13 @@
  * Date: 10/06/14
  * Time: 13:58
  */
-namespace Acme\TODOListBundle\Controller;
+namespace TODOListBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Interface TasksInterface
- * @package Acme\TODOListBundle\Controller
+ * @package TODOListBundle\Controller
  */
 interface TasksInterface
 {

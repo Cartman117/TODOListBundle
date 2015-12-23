@@ -1,14 +1,15 @@
 <?php
-namespace Acme\TODOListBundle\Controller;
+namespace TODOListBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Security\Core\Authentication\Token\AnonymousToken;
 use Symfony\Component\Security\Core\Authentication\Token\PreAuthenticatedToken;
 use HappyR\Google\ApiBundle\Services\GoogleClient;
 
 /**
  * Class OAuthController
- * @package Acme\TODOListBundle\Controller
+ * @package TODOListBundle\Controller
  */
 class OAuthController extends Controller
 {
@@ -31,15 +32,24 @@ class OAuthController extends Controller
             $googleClient->authenticate($code);
             $accessToken = $googleClient->getAccessToken();
 
-            $this->securityContext = $this->get("security.context");
+            $this->securityContext = $this->get("security.token_storage");
 
             $token = $this->securityContext->getToken();
-            $token = new PreAuthenticatedToken(
-                $accessToken,
-                $token->getCredentials(),
-                $token->getProviderKey(),
-                [ 'ROLE_HAS_TOKEN' ]
-            );
+            if ($token instanceof AnonymousToken){
+                $token = new PreAuthenticatedToken(
+                    $accessToken,
+                    $token->getCredentials(),
+                    $token->getSecret(),
+                    [ 'ROLE_HAS_TOKEN' ]
+                );
+            } else {
+                $token = new PreAuthenticatedToken(
+                    $accessToken,
+                    $token->getCredentials(),
+                    $token->getProviderKey(),
+                    [ 'ROLE_HAS_TOKEN' ]
+                );
+            }
             $this->securityContext->setToken($token);
         }
         if(!empty($this->securityContext)) {
@@ -63,7 +73,7 @@ class OAuthController extends Controller
      */
     public function exitAction(Request $request)
     {
-        $this->get('security.context')->setToken(null);
+        $this->get('security.token_storage')->setToken(null);
         return $this->redirect($this->generateUrl("todolist_homepage"));
     }
 } 

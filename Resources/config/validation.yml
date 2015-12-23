@@ -1,4 +1,4 @@
-Acme\TODOListBundle\Entity\TaskLists:
+TODOListBundle\Entity\TaskLists:
   properties:
     title:
       - NotBlank: ~

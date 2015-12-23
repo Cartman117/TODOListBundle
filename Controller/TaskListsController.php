@@ -1,15 +1,15 @@
 <?php
-namespace Acme\TODOListBundle\Controller;
+namespace TODOListBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Acme\TODOListBundle\Entity\TaskLists;
-use Acme\TODOListBundle\Form\Type\TaskListsType;
-use Acme\TODOListBundle\Controller\TaskListsInterface;
+use TODOListBundle\Entity\TaskLists;
+use TODOListBundle\Form\Type\TaskListsType;
+use TODOListBundle\Controller\TaskListsInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class TaskListsController
- * @package Acme\TODOListBundle\Controller
+ * @package TODOListBundle\Controller
  */
 class TaskListsController extends Controller implements TaskListsInterface
 {
@@ -40,7 +40,8 @@ class TaskListsController extends Controller implements TaskListsInterface
     {
         $taskList = new TaskLists();
 
-        $form = $this->createForm(new TaskListsType(), $taskList);
+        $options = ["update" => FALSE];
+        $form = $this->createForm(TaskListsType::class, $taskList, $options);
 
         $form->handleRequest($request);
         if($form->isValid()){
@@ -92,7 +93,8 @@ class TaskListsController extends Controller implements TaskListsInterface
             throw $this->createNotFoundException("La liste de taches n'existe pas");
         }
 
-        $form = $this->createForm(new TaskListsType(true), $taskList);
+        $options = ["update" => TRUE];
+        $form = $this->createForm(TaskListsType::class, $taskList, $options);
 
         $form->handleRequest($request);
         if($form->isValid()){

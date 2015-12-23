@@ -1,11 +1,11 @@
 <?php
-namespace Acme\TODOListBundle\Controller;
+namespace TODOListBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Interface TaskListsInterface
- * @package Acme\TODOListBundle\Controller
+ * @package TODOListBundle\Controller
  */
 interface TaskListsInterface
 {

@@ -1,14 +1,14 @@
 <?php
-namespace Acme\TODOListBundle\Controller;
+namespace TODOListBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Acme\TODOListBundle\Entity\Tasks;
-use Acme\TODOListBundle\Form\Type\TasksType;
+use TODOListBundle\Entity\Tasks;
+use TODOListBundle\Form\Type\TasksType;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class TasksController
- * @package Acme\TODOListBundle\Controller
+ * @package TODOListBundle\Controller
  */
 class TasksController extends Controller implements TasksInterface
 {
@@ -33,11 +33,14 @@ class TasksController extends Controller implements TasksInterface
     {
         $task = new Tasks();
 
-        $form = $this->createForm(new TasksType(), $task);
+        $options = ["update" => FALSE];
+        $form = $this->createForm(TasksType::class, $task, $options);
 
         $form->handleRequest($request);
         if($form->isValid()){
-
+            if (empty($task->getStatus())){
+                $task->setStatus("needsAction");
+            }
             $repository = $this->getDoctrine()->getRepository('TODOListBundle:TaskLists');
             $taskList = $repository->findOneById($idTaskList);
             $task->setParent($taskList);
@@ -88,10 +91,11 @@ class TasksController extends Controller implements TasksInterface
         $task = $repository->findOneById($idTask);
 
         if(empty($task)){
-            throw $this->createNotFoundException("La tache n'existe pas");
+            throw $this->createNotFoundException("La tâche n'existe pas");
         }
 
-        $form = $this->createForm(new TasksType(true), $task);
+        $options = ["update" => TRUE];
+        $form = $this->createForm(TasksType::class, $task, $options);
 
         $form->handleRequest($request);
         if($form->isValid()){

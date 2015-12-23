@@ -1,94 +1,94 @@
 todolist_homepage:
-    pattern:  /
+    path:  /
     defaults: { _controller: TODOListBundle:TaskLists:index }
 
 todolist_list_homepage:
-    pattern:  /TODOList
+    path:  /TODOList
     defaults: { _controller: TODOListBundle:TaskLists:index }
 
 # LOCAL STORAGE #
 todolist_list_tasklists:
-    pattern:  /TODOList/lists
+    path:  /TODOList/lists
     defaults: { _controller: TODOListBundle:TaskLists:getTaskLists }
 
 todolist_new_tasklists:
-    pattern:  /TODOList/lists/new
+    path:  /TODOList/lists/new
     defaults: { _controller: TODOListBundle:TaskLists:newTaskList }
 
 todolist_delete_tasklists:
-    pattern: /TODOList/lists/delete
+    path: /TODOList/lists/delete
     defaults: { _controller: TODOListBundle:TaskLists:deleteTaskList }
 
 todolist_update_tasklists:
-    pattern: /TODOList/lists/update/{idTaskList}
+    path: /TODOList/lists/update/{idTaskList}
     defaults: { _controller: TODOListBundle:TaskLists:updateTaskList }
 
 todolist_list_tasks:
-    pattern:  /TODOList/lists/{idTaskList}/tasks
+    path:  /TODOList/lists/{idTaskList}/tasks
     defaults: { _controller: TODOListBundle:Tasks:getTasks }
 
 todolist_new_tasks:
-    pattern:  /TODOList/lists/{idTaskList}/tasks/new
+    path:  /TODOList/lists/{idTaskList}/tasks/new
     defaults: { _controller: TODOListBundle:Tasks:newTask }
 
 todolist_delete_tasks:
-    pattern: /TODOList/lists/{idTaskList}/tasks/delete
+    path: /TODOList/lists/{idTaskList}/tasks/delete
     defaults: { _controller: TODOListBundle:Tasks:deleteTask }
     requirements:
       idTaskList: \d+
 
 todolist_update_tasks:
-    pattern: /TODOList/lists/{idTaskList}/tasks/update/{idTask}
+    path: /TODOList/lists/{idTaskList}/tasks/update/{idTask}
     defaults: { _controller: TODOListBundle:Tasks:updateTask }
     requirements:
       idTaskList: \d+
       idTask: \d+
 
 todolist_status_tasks:
-    pattern: /TODOList/lists/{idTaskList}/tasks/status/{idTask}
+    path: /TODOList/lists/{idTaskList}/tasks/status/{idTask}
     defaults: { _controller: TODOListBundle:Tasks:statusTask }
 
 # Google Api #
 todolist_oauth_callback:
-    pattern: /TODOList/oauth/callback
+    path: /TODOList/oauth/callback
     defaults: { _controller: TODOListBundle:OAuth:callback }
 
 todolist_oauth_exit:
-    pattern: /TODOList/oauth/exit
+    path: /TODOList/oauth/exit
     defaults: { _controller: TODOListBundle:OAuth:exit }
 
 todolist_googleapi_list_taskslists:
-    pattern: /TODOList/googleapi/lists
+    path: /TODOList/googleapi/lists
     defaults: { _controller: TODOListBundle:TaskListsGoogleApi:getTaskLists }
 
 todolist_googleapi_new_tasklists:
-    pattern:  /TODOList/googleapi/lists/new
+    path:  /TODOList/googleapi/lists/new
     defaults: { _controller: TODOListBundle:TaskListsGoogleApi:newTaskList }
 
 todolist_googleapi_delete_tasklists:
-    pattern: /TODOList/googleapi/lists/delete
+    path: /TODOList/googleapi/lists/delete
     defaults: { _controller: TODOListBundle:TaskListsGoogleApi:deleteTaskList }
 
 todolist_googleapi_update_tasklists:
-    pattern: /TODOList/googleapi/lists/update/{idTaskList}
+    path: /TODOList/googleapi/lists/update/{idTaskList}
     defaults: { _controller: TODOListBundle:TaskListsGoogleApi:updateTaskList }
 
 todolist_googleapi_list_tasks:
-    pattern:  /TODOList/googleapi/lists/{idTaskList}/tasks
+    path:  /TODOList/googleapi/lists/{idTaskList}/tasks
     defaults: { _controller: TODOListBundle:TasksGoogleApi:getTasks }
 
 todolist_googleapi_new_tasks:
-    pattern:  /TODOList/googleapi/lists/{idTaskList}/tasks/new
+    path:  /TODOList/googleapi/lists/{idTaskList}/tasks/new
     defaults: { _controller: TODOListBundle:TasksGoogleApi:newTask }
 
 todolist_googleapi_delete_tasks:
-    pattern: /TODOList/googleapi/lists/{idTaskList}/tasks/delete
+    path: /TODOList/googleapi/lists/{idTaskList}/tasks/delete
     defaults: { _controller: TODOListBundle:TasksGoogleApi:deleteTask }
 
 todolist_googleapi_update_tasks:
-    pattern: /TODOList/googleapi/lists/{idTaskList}/tasks/update/{idTask}
+    path: /TODOList/googleapi/lists/{idTaskList}/tasks/update/{idTask}
     defaults: { _controller: TODOListBundle:TasksGoogleApi:updateTask }
 
 todolist_googleapi_status_tasks:
-    pattern: /TODOList/googleapi/lists/{idTaskList}/tasks/status/{idTask}
+    path: /TODOList/googleapi/lists/{idTaskList}/tasks/status/{idTask}
     defaults: { _controller: TODOListBundle:TasksGoogleApi:statusTask }

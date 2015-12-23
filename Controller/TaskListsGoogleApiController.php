@@ -1,15 +1,15 @@
 <?php
-namespace Acme\TODOListBundle\Controller;
+namespace TODOListBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Acme\TODOListBundle\Controller\TaskListsInterface;
-use Acme\TODOListBundle\Form\Type\TaskListsType;
+use TODOListBundle\Controller\TaskListsInterface;
+use TODOListBundle\Form\Type\TaskListsType;
 use Symfony\Component\HttpFoundation\Request;
 use HappyR\Google\ApiBundle\Services\GoogleClient;
 
 /**
  * Class TaskListsGoogleApiController
- * @package Acme\TODOListBundle\Controller
+ * @package TODOListBundle\Controller
  */
 class TaskListsGoogleApiController extends Controller implements TaskListsInterface
 {
@@ -20,7 +20,7 @@ class TaskListsGoogleApiController extends Controller implements TaskListsInterf
     {
         $client = $this->container->get("happyr.google.api.client");
         $googleClient = $client->getGoogleClient();
-        $this->securityContext = $this->get("security.context");
+        $this->securityContext = $this->get("security.token_storage");
         $token = $this->securityContext->getToken();
         $googleClient->setAccessToken($token->getUser());
 

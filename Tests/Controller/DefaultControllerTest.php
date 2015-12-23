@@ -1,9 +1,13 @@
 <?php
 
-namespace Acme\TODOListBundle\Tests\Controller;
+namespace TODOListBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+/**
+ * Class DefaultControllerTest
+ * @package TODOListBundle\Tests\Controller
+ */
 class DefaultControllerTest extends WebTestCase
 {
     public function testIndex()

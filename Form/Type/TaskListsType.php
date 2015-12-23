@@ -1,43 +1,45 @@
 <?php
-namespace Acme\TODOListBundle\Form\Type;
+namespace TODOListBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
+/**
+ * Class TaskListsType
+ * @package TODOListBundle\Form\Type
+ */
 class TaskListsType extends AbstractType
 {
     private $update;
     private $dataClass;
 
-    public function  __construct($update = false, $dataClass = "Acme\TODOListBundle\Entity\TaskLists")
-    {
-        $this->update = $update;
-        $this->dataClass = $dataClass;
-    }
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add("title", "text", ["label" => false,
-                                        "attr" => ["placeholder" => "Title",
-                                                    "class" => "form-control"]]);
-        if($this->update){
-            $builder->add("Update", "submit", ["attr" => ["class" => "form-control"]]);
-        }
-        else{
-            $builder->add("Create", "submit", ["attr" => ["class" => "form-control"]]);
+        $this->update = $options['update'];
+
+        $builder->add('title', TextType::class, [   'label' => false,
+                                                    'attr' => [ 'placeholder' => 'Title',
+                                                                'class' => 'form-control']]);
+        if ($this->update) {
+            $builder->add('Update', SubmitType::class, ['attr' => ['class' => 'form-control']]);
+        } else {
+            $builder->add('Create', SubmitType::class, ['attr' => ['class' => 'form-control']]);
         }
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            "data_class" => $this->dataClass
+            'data_class'    => 'TODOListBundle\Entity\TaskLists',
+            'update'        => FALSE
         ));
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
-        return "taskListsType";
+        return "TaskListsType";
     }
 }

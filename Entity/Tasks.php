@@ -1,11 +1,12 @@
 <?php
 
-namespace Acme\TODOListBundle\Entity;
+namespace TODOListBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Tasks
+ * Class Tasks
+ * @package TODOListBundle\Entity
  */
 class Tasks
 {
@@ -35,7 +36,7 @@ class Tasks
     private $id;
 
     /**
-     * @var \Acme\TODOListBundle\Entity\TaskLists
+     * @var \TODOListBundle\Entity\TaskLists
      */
     private $parent;
 
@@ -112,10 +113,10 @@ class Tasks
     /**
      * Set due
      *
-     * @param \DateTime $due
+     * @param DateTime $due
      * @return Tasks
      */
-    public function setDue($due)
+    public function setDue(\DateTime $due = null)
     {
         $this->due = $due;
 
@@ -125,7 +126,7 @@ class Tasks
     /**
      * Get due
      *
-     * @return \DateTime 
+     * @return DateTime
      */
     public function getDue()
     {
@@ -145,10 +146,10 @@ class Tasks
     /**
      * Set parent
      *
-     * @param \Acme\TODOListBundle\Entity\Tasklists $parent
+     * @param \TODOListBundle\Entity\Tasklists $parent
      * @return Tasks
      */
-    public function setParent(\Acme\TODOListBundle\Entity\Tasklists $parent = null)
+    public function setParent(\TODOListBundle\Entity\Tasklists $parent = null)
     {
         $this->parent = $parent;
 
@@ -158,7 +159,7 @@ class Tasks
     /**
      * Get parent
      *
-     * @return \Acme\TODOListBundle\Entity\Tasklists 
+     * @return \TODOListBundle\Entity\Tasklists
      */
     public function getParent()
     {

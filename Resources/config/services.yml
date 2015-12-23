@@ -1,7 +1,7 @@
 parameters:
     todolist_google_client:         HappyR\Google\ApiBundle\Services\GoogleClient
-    todolist_access_denied_handler: Acme\TODOListBundle\Security\Authorization\AccessDeniedHandler
-    todolist_authenticator:         Acme\TODOListBundle\Security\Authentication\Authenticator
+    todolist_access_denied_handler: TODOListBundle\Security\Authorization\AccessDeniedHandler
+    todolist_authenticator:         TODOListBundle\Security\Authentication\Authenticator
 
 services:
     todolist_google_client:
