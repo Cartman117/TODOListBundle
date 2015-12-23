@@ -31,8 +31,7 @@ todo_list:
 
 This into you /app/config/config.yml
 
-<code>
-happy_r_google_api:
+<code>happy_r_google_api:
     application_name:       "TODOListBundle"
     oauth2_client_id:       "XXXX"
     oauth2_client_secret:   "XXXX"
