@@ -32,30 +32,30 @@ todo_list:
 This into you /app/config/config.yml
 
 <code>
-happy_r_google_api:
-    application_name:       "TODOListBundle"
-    oauth2_client_id:       "XXXX"
-    oauth2_client_secret:   "XXXX"
-    oauth2_redirect_uri:    "XXXX/TODOList/oauth/callback"
-    developer_key:          "XXXX"
-    site_name:              "XXXX/TODOList"
-
-parameters:
-    todolist_google_client:         HappyR\Google\ApiBundle\Services\GoogleClient
-    todolist_access_denied_handler: TODOListBundle\Security\Authorization\AccessDeniedHandler
-    todolist_authenticator:         TODOListBundle\Security\Authentication\Authenticator
-
-services:
-    todolist_google_client:
-        class:      %todolist_google_client%
-        arguments:  [%happy_r_google_api%]
-    todolist_access_denied_handler:
-        class:      %todolist_access_denied_handler%
-        arguments:  [@todolist_google_client, @router]
-        tags:
-            - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
-    todolist_authenticator:
-        class:      %todolist_authenticator%
+    happy_r_google_api:
+        application_name:       "TODOListBundle"
+        oauth2_client_id:       "XXXX"
+        oauth2_client_secret:   "XXXX"
+        oauth2_redirect_uri:    "XXXX/TODOList/oauth/callback"
+        developer_key:          "XXXX"
+        site_name:              "XXXX/TODOList"
+    
+    parameters:
+        todolist_google_client:         HappyR\Google\ApiBundle\Services\GoogleClient
+        todolist_access_denied_handler: TODOListBundle\Security\Authorization\AccessDeniedHandler
+        todolist_authenticator:         TODOListBundle\Security\Authentication\Authenticator
+    
+    services:
+        todolist_google_client:
+            class:      %todolist_google_client%
+            arguments:  [%happy_r_google_api%]
+        todolist_access_denied_handler:
+            class:      %todolist_access_denied_handler%
+            arguments:  [@todolist_google_client, @router]
+            tags:
+                - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
+        todolist_authenticator:
+            class:      %todolist_authenticator%
 </code>
 
 And this into your /app/config/security.yml
