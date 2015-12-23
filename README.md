@@ -32,6 +32,7 @@ todo_list:
 This into you /app/config/config.yml
 
 <code>
+
     happy_r_google_api:
         application_name:       "TODOListBundle"
         oauth2_client_id:       "XXXX"
@@ -54,11 +55,13 @@ This into you /app/config/config.yml
                 - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
         todolist_authenticator:
             class:      %todolist_authenticator%
+            
 </code>
 
 And this into your /app/config/security.yml
 
 <code>
+
     security:
         providers:
             in_memory:
