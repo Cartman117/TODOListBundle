@@ -15,24 +15,21 @@ to your mysql server, after creating your database.
 For this you can use Vagrant [PHP-VM](https://github.com/willdurand-edu/php-vm) where the database, apache are already configured. But you will have to apply the SQL script.
 
 Then you will have to configure Doctrine, to use your database in /app/config in Symfony2 :
-
+<code>
     - parameters.yml
     - config.yml
-
+</code>
 Add the follwing code into your /app/config/routing.yml
 
 <code>
-
     todo_list:
         resource: "@TODOListBundle/Resources/config/routing.yml"
         prefix:   /
-    
 </code>
 
 This into you /app/config/config.yml
 
 <code>
-
     happy_r_google_api:
         application_name:       "TODOListBundle"
         oauth2_client_id:       "XXXX"
@@ -60,7 +57,6 @@ This into you /app/config/config.yml
 And this into your /app/config/security.yml
 
 <code>
-
     security:
         providers:
             in_memory:
