@@ -29,10 +29,38 @@ todo_list:
     prefix:   /
 </code>
 
+This into you /app/config/config.yml
+
+<code>
+happy_r_google_api:
+    application_name:       "TODOListBundle"
+    oauth2_client_id:       "XXXX"
+    oauth2_client_secret:   "XXXX"
+    oauth2_redirect_uri:    "XXXX/TODOList/oauth/callback"
+    developer_key:          "XXXX"
+    site_name:              "XXXX/TODOList"
+
+parameters:
+    todolist_google_client:         HappyR\Google\ApiBundle\Services\GoogleClient
+    todolist_access_denied_handler: TODOListBundle\Security\Authorization\AccessDeniedHandler
+    todolist_authenticator:         TODOListBundle\Security\Authentication\Authenticator
+
+services:
+    todolist_google_client:
+        class:      %todolist_google_client%
+        arguments:  [%happy_r_google_api%]
+    todolist_access_denied_handler:
+        class:      %todolist_access_denied_handler%
+        arguments:  [@todolist_google_client, @router]
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
+    todolist_authenticator:
+        class:      %todolist_authenticator%
+</code>
+
 And this into your /app/config/security.yml
 
 <code>
-
     security:
         providers:
             in_memory:
@@ -50,9 +78,12 @@ And this into your /app/config/security.yml
                 access_denied_handler: todolist_access_denied_handler
     
         access_control:
-            - { path: ^/TODOList/oauth/callback$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-            - { path: ^/TODOList/lists, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-            - { path: ^/, roles: ROLE_HAS_TOKEN }
+            - { path: ^/$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+            - { path: ^/TODOList$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+            - { path: ^/TODOList/oauth/callback, role: IS_AUTHENTICATED_ANONYMOUSLY }
+            - { path: ^/TODOList/lists, role: IS_AUTHENTICATED_ANONYMOUSLY }
+    
+        access_denied_url: /TODOList/oauth/callback
 </code>
 
 You must include [HappyR - GoogleApiBundle](https://github.com/HappyR/GoogleApiBundle) and add our Bundle into Symfony2 and register them in your AppKernel.php
